@@ -1,882 +1,123 @@
 <!doctype html>
-<html lang="tr">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>NYC Trip</title>
+<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>NYC Trip</title>
 <style>
-:root{--bg:#f6f6f2;--text:#111;--muted:#77756f;--line:#e4e2dc;--card:#fff;--dark:#131313;--orange:#ff5f1f;--green:#1f8a4c;--red:#c4473b}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;color:var(--text)}
-.app{max-width:760px;margin:auto;padding:0 12px 90px}.topnav{position:sticky;top:0;z-index:40;background:rgba(246,246,242,.96);backdrop-filter:blur(14px);padding:12px 0 10px;border-bottom:1px solid rgba(0,0,0,.04)}
-.days{display:flex;gap:8px;overflow:auto;scrollbar-width:none}.days::-webkit-scrollbar{display:none}.daychip{border:1px solid #d7d4cd;background:#fff;color:#111;border-radius:999px;padding:9px 13px;font-size:12px;font-weight:900;white-space:nowrap;box-shadow:0 1px 0 rgba(0,0,0,.03)}.daychip.active{background:#171717;color:#fff;border-color:#171717}
-.route-summary{margin:10px 0 4px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 12px;font-size:11px;line-height:1.45;color:#5e5d59;white-space:nowrap;overflow:auto}.route-summary b{color:#111}
-.daytitle{font-size:21px;letter-spacing:-.03em;margin:20px 3px 10px}.list{display:grid;gap:10px}.route-card{display:grid;grid-template-columns:92px 1fr 26px;gap:12px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:20px;padding:10px;cursor:pointer;box-shadow:0 5px 20px rgba(0,0,0,.025)}.thumb{width:92px;height:104px;border-radius:14px;object-fit:cover;background:#ddd}.route-card h3{font-size:17px;line-height:1.15;margin:0 0 5px;letter-spacing:-.02em}.route-card p{font-size:12px;line-height:1.4;color:#555;margin:0 0 8px}.meta{display:flex;gap:5px;flex-wrap:wrap}.meta span{font-size:9px;font-weight:850;border-radius:999px;padding:5px 7px;background:#f0eee8;color:#555}.chev{font-size:22px;color:#aaa}.route-card.done{opacity:.58}.route-card.done .chev{color:var(--green)}.route-card.skipped{opacity:.48}
-.detail{position:fixed;inset:0;background:#000;z-index:100;display:none}.detail.open{display:block}.detail-media{position:absolute;inset:0}.detail-media img{width:100%;height:100%;object-fit:cover}.detail-scrim{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.08) 0%,rgba(0,0,0,.05) 42%,rgba(0,0,0,.78) 64%,rgba(0,0,0,.96) 100%)}.detail-top{position:absolute;top:max(14px,env(safe-area-inset-top));left:12px;right:12px;display:flex;align-items:center;justify-content:space-between;z-index:3}.back,.floatbtn{border:0;background:rgba(18,18,18,.68);color:#fff;backdrop-filter:blur(12px);border-radius:999px;height:42px;min-width:42px;padding:0 14px;font-weight:900}.floatset{display:flex;gap:8px}.detail-content{position:absolute;left:0;right:0;bottom:0;padding:0 18px max(24px,env(safe-area-inset-bottom));color:#fff;z-index:2}.inverse{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}.inverse span{font-size:10px;font-weight:900;padding:6px 9px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.1);backdrop-filter:blur(12px);border-radius:999px}.detail h2{font-size:36px;line-height:.98;letter-spacing:-.05em;margin:0 0 8px}.detail .sub{font-size:13px;color:#ddd;font-weight:700;margin-bottom:12px}.detail .desc{font-size:14px;line-height:1.5;color:#eee;margin:0 0 16px;max-width:620px}.detail-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}.dact{border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.1);color:#fff;border-radius:14px;padding:12px 8px;font-size:11px;font-weight:900;text-align:center;text-decoration:none}.dact.primary{background:#fff;color:#111}.dact.done{background:#eaf7ef;color:#1f7a47;border-color:#eaf7ef}.dact.skip{background:#3a1714;color:#ffd9d5;border-color:#5b2521}
-.sheet{position:fixed;left:12px;right:12px;bottom:12px;z-index:130;background:#fff;border-radius:22px;padding:16px;display:none;box-shadow:0 20px 60px rgba(0,0,0,.3)}.sheet.open{display:block}.sheet h3{margin:0 0 8px}.sheet textarea{width:100%;min-height:130px;border:1px solid var(--line);border-radius:14px;padding:12px;font:inherit;resize:vertical}.sheetrow{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}.sheet button{border:0;border-radius:11px;padding:10px 13px;font-weight:900}.mapmock{background:#f4f2ec;border-radius:16px;padding:14px}.routeviz{height:72px;position:relative;margin:8px 0}.routeviz:before{content:"";position:absolute;left:14px;right:14px;top:34px;height:3px;background:#111;border-radius:99px}.dot{position:absolute;top:27px;width:16px;height:16px;border-radius:50%;background:#111}.dot.a{left:8px}.dot.b{right:8px}.arrowline{position:absolute;right:50%;top:25px;font-size:24px}.mapcopy{font-size:12px;line-height:1.5;color:#555}.swipehint{text-align:center;color:#aaa;font-size:10px;margin-top:10px}
-@media(max-width:520px){.route-card{grid-template-columns:78px 1fr 22px}.thumb{width:78px;height:96px}.detail h2{font-size:33px}.detail-actions{grid-template-columns:1fr 1fr}.dact.primary{grid-column:1/-1}}
+:root{--bg:#f4f4f0;--card:#fff;--text:#111;--muted:#6f6e68;--line:#e2e0da}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+button,input,select{font:inherit} .app{max-width:760px;margin:auto;padding:8px 8px 80px} .top{position:sticky;top:0;z-index:30;background:rgba(244,244,240,.96);backdrop-filter:blur(14px);padding:8px 0 10px}
+.days{display:flex;gap:7px;overflow:auto;scrollbar-width:none} .days::-webkit-scrollbar{display:none} .daychip{border:1px solid #d8d6d0;background:#fff;border-radius:999px;padding:9px 13px;font-size:12px;font-weight:900;white-space:nowrap} .daychip.active{background:#111;color:#fff;border-color:#111}
+.summary{margin-top:8px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px 11px;font-size:11px;color:#555;white-space:nowrap;overflow:auto}
+.daytitle{font-size:20px;letter-spacing:-.03em;margin:18px 2px 10px}
+.list{display:grid;gap:8px} .route-card{height:132px;border:1px solid var(--line);background:#fff;border-radius:18px;padding:4px;display:grid;grid-template-columns:36% 1fr 18px;gap:9px;align-items:stretch;text-align:left;cursor:pointer;overflow:hidden}
+.imagebox{position:relative;height:124px;border-radius:14px 0 0 14px;overflow:hidden;background:#ddd} .imagebox img{width:100%;height:100%;object-fit:cover;display:block}
+.timechip{position:absolute;left:8px;bottom:8px;background:rgba(255,255,255,.94);color:#111;border:1px solid rgba(0,0,0,.08);border-radius:11px;padding:7px 9px;font-size:11px;font-weight:950;box-shadow:0 3px 12px rgba(0,0,0,.12)}
+.copy{min-width:0;padding:10px 2px 8px 0;display:flex;flex-direction:column;overflow:hidden} .copy h3{font-size:16px;line-height:1.12;margin:0 0 5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:36px} .copy p{font-size:11px;line-height:1.32;color:#555;margin:0 0 8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:29px}
+.meta{margin-top:auto;display:flex;gap:5px;min-width:0;overflow:hidden} .meta span{font-size:9px;font-weight:850;background:#f1efe9;border-radius:999px;padding:5px 7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis} .chev{align-self:center;color:#aaa;font-size:20px}
+.detail[hidden]{display:none!important} .detail{position:fixed;inset:0;z-index:100;background:#000;color:#fff} .hero{position:absolute;inset:0;overflow:hidden} .hero>img{width:100%;height:100%;object-fit:cover;display:block} .gradient{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.18) 0%,rgba(0,0,0,.03) 40%,rgba(0,0,0,.74) 67%,rgba(0,0,0,.97) 100%)}
+.story{position:absolute;z-index:5;top:max(12px,env(safe-area-inset-top));left:62px;right:120px;display:flex;gap:4px} .seg{height:3px;flex:1;background:rgba(255,255,255,.28);border-radius:99px;overflow:hidden} .fill{height:100%;width:0;background:#fff} .seg.done .fill{width:100%} .seg.active .fill{animation:fill 5s linear forwards} @keyframes fill{to{width:100%}}
+.tap{position:absolute;top:54px;bottom:45%;width:50%;border:0;background:transparent;z-index:4} .tap.left{left:0} .tap.right{right:0}
+.topbar{position:absolute;z-index:8;top:max(10px,env(safe-area-inset-top));left:12px;right:12px;display:flex;justify-content:space-between} .tools{display:flex;gap:8px} .icon{width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(15,15,15,.48);backdrop-filter:blur(12px);color:#fff;font-size:20px}
+.detailcopy{position:absolute;z-index:6;left:0;right:0;bottom:0;padding:16px 16px max(18px,env(safe-area-inset-bottom))} .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px} .chips span{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.1);border-radius:999px;padding:6px 8px;font-size:10px;font-weight:900}
+.detailcopy h2{font-size:clamp(32px,9vw,46px);line-height:.96;letter-spacing:-.055em;margin:0 0 6px} .sub{font-size:13px;font-weight:800;color:#ddd;margin-bottom:9px} .desc{font-size:13.5px;line-height:1.48;color:#eee;margin:0 0 12px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.live{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px} .field{display:flex;gap:7px;align-items:center;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);border-radius:12px;padding:8px 10px} .field span{font-size:9px;color:#aaa;text-transform:uppercase;font-weight:900} .field input,.field select{border:0;outline:0;background:transparent;color:#fff;font-size:12px;font-weight:900} .field option{color:#111}
+.actions{display:grid;grid-template-columns:40px 1fr 1fr 40px;gap:8px;align-items:center} .nav{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);color:#fff;font-size:24px} .act{min-height:40px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:#fff;color:#111;font-size:11px;font-weight:950} .act.alt{background:rgba(255,255,255,.1);color:#fff} .route{display:block;text-align:center;margin-top:8px;color:#ddd;text-decoration:none;font-size:10px;font-weight:800}
+.panel{position:absolute;z-index:20;top:max(64px,calc(env(safe-area-inset-top) + 56px));right:12px;width:min(88vw,370px);max-height:56%;background:rgba(18,18,18,.94);border:1px solid rgba(255,255,255,.14);border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.45)} .panel[hidden]{display:none!important} .phead{display:flex;justify-content:space-between;align-items:flex-start;padding:14px;border-bottom:1px solid rgba(255,255,255,.1)} .phead h3{margin:2px 0 0} .phead small{font-size:9px;color:#999;font-weight:900} .close{border:0;background:transparent;color:#fff;font-size:26px}
+.notes{max-height:250px;overflow:auto;padding:10px;display:grid;gap:8px} .note{display:flex;gap:9px;align-items:center;background:#2a2a2a;border-radius:12px;padding:10px} .note.checked{opacity:.5} .note.checked .ntxt{text-decoration:line-through} .ncheck{width:22px;height:22px;border-radius:7px;border:1px solid #777;background:transparent;color:#111} .note.checked .ncheck{background:#fff} .ntxt{font-size:13px;flex:1} .ndel{border:0;background:#5b1e1a;color:#ffd8d4;border-radius:9px;padding:6px 8px;font-size:10px}
+.nform{display:grid;grid-template-columns:1fr 40px;gap:7px;padding:10px;border-top:1px solid rgba(255,255,255,.1)} .nform input{min-width:0;border:0;border-radius:12px;padding:11px;font-size:16px} .nform button{border:0;border-radius:12px;background:#fff;font-size:18px;font-weight:900}
+.mapwrap{height:240px;background:#ddd} .mapwrap iframe{width:100%;height:100%;border:0} .mapsum{padding:12px 14px;color:#ddd;font-size:12px;line-height:1.45}
+@media(max-width:520px){.route-card{grid-template-columns:38% 1fr 16px} .detailcopy{padding-left:14px;padding-right:14px} .panel{left:12px;right:12px;width:auto}}
 
-.navactions{grid-template-columns:44px 1fr 1fr 44px;align-items:center}
-.navcircle{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.12);color:#fff;font-size:25px;line-height:1;font-weight:600;backdrop-filter:blur(12px)}
-.notes-panel{position:absolute;z-index:5;top:max(72px,calc(env(safe-area-inset-top) + 62px));right:12px;width:min(86vw,360px);max-height:48vh;display:none;flex-direction:column;background:rgba(15,15,15,.86);color:#fff;border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(18px);border-radius:20px;overflow:hidden;box-shadow:0 22px 60px rgba(0,0,0,.38)}
-.notes-panel.open{display:flex}
-.notes-head{display:flex;align-items:flex-start;justify-content:space-between;padding:14px 14px 10px;border-bottom:1px solid rgba(255,255,255,.12)}
-.notes-head h3{margin:2px 0 0;font-size:18px}.notes-kicker{font-size:9px;font-weight:900;letter-spacing:.08em;color:#bbb}.notes-close{border:0;background:transparent;color:#fff;font-size:26px;line-height:1}
-.notes-list{overflow:auto;padding:10px 10px 4px;display:flex;flex-direction:column;gap:8px;min-height:60px}
-.note-row-wrap{position:relative;overflow:hidden;border-radius:14px}
-.note-delete{position:absolute;right:0;top:0;bottom:0;width:72px;border:0;background:#c43f35;color:#fff;font-weight:900}
-.note-row{position:relative;z-index:2;display:flex;align-items:center;gap:10px;background:#272727;border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:11px 12px;transition:transform .18s ease}
-.note-row.reveal{transform:translateX(-72px)}
-.note-check{width:22px;height:22px;flex:0 0 22px;border-radius:7px;border:1.5px solid #777;background:transparent;color:#fff;font-size:13px}
-.note-row.checked{opacity:.52}.note-row.checked .note-text{text-decoration:line-through}.note-row.checked .note-check{background:#fff;color:#111;border-color:#fff}
-.note-text{font-size:13px;line-height:1.35;word-break:break-word}
-.note-composer{display:grid;grid-template-columns:1fr 38px;gap:7px;padding:10px;border-top:1px solid rgba(255,255,255,.12)}
-.note-composer input{min-width:0;border:0;outline:0;border-radius:12px;background:#fff;color:#111;padding:11px 12px;font:inherit;font-size:13px}.note-composer button{border:0;border-radius:12px;background:#fff;color:#111;font-size:18px;font-weight:900}
-.note-help{font-size:9px;color:#aaa;padding:0 12px 11px}
-@media(max-width:520px){.navactions{grid-template-columns:40px 1fr 1fr 40px}.navcircle{width:38px;height:38px}.notes-panel{width:calc(100vw - 24px);max-height:52vh}}
-
-
-.storybar{position:absolute;top:max(10px,env(safe-area-inset-top));left:64px;right:120px;z-index:4;display:flex;gap:4px}.storyseg{height:3px;flex:1;background:rgba(255,255,255,.28);border-radius:99px;overflow:hidden}.storyfill{height:100%;width:0;background:#fff}.storyseg.done .storyfill{width:100%}.storyseg.active .storyfill{animation:storyfill var(--storydur,5s) linear forwards}@keyframes storyfill{from{width:0}to{width:100%}}.storytap{position:absolute;top:0;bottom:42%;width:50%;z-index:2;border:0;background:transparent}.storytap.prev{left:0}.storytap.next{right:0}.time-tools{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}.time-edit{border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;border-radius:12px;padding:8px 10px;font-size:11px;font-weight:850}.time-edit input,.time-edit select{border:0;background:transparent;color:#fff;font:inherit;font-weight:900;outline:none}.time-edit input{width:76px}.time-edit select option{color:#111}.recalc{font-size:10px;color:#bbb;margin:-4px 0 10px}.livebadge{display:inline-flex;align-items:center;gap:5px}.livebadge:before{content:'';width:6px;height:6px;border-radius:50%;background:#67d88a}
-
-/* v9.2 route list card refresh */
-.app{padding-left:8px;padding-right:8px}
-.list{gap:8px}
-.route-card{
-  position:relative;
-  display:grid;
-  grid-template-columns:42% 1fr 20px;
-  gap:10px;
-  align-items:stretch;
-  min-height:124px;
-  padding:5px;
-  border-radius:18px;
-  overflow:hidden;
+.icon svg,.nav svg,.chev svg{
+  width:22px;height:22px;display:block;fill:none;stroke:currentColor;
+  stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;
 }
-.thumbwrap{
-  position:relative;
-  min-width:0;
-  min-height:114px;
-  border-radius:14px;
-  overflow:hidden;
-  background:#ddd;
+.icon,.nav{display:grid;place-items:center}
+.chev svg{width:18px;height:18px;stroke-width:2.8}
+.icon{background:rgba(10,10,10,.56);border:1.5px solid rgba(255,255,255,.28)}
+.nav{border:1.5px solid rgba(255,255,255,.24)}
+.mapwrap{position:relative}
+.map-loading{
+  position:absolute;inset:0;display:grid;place-items:center;
+  background:#efeee9;color:#555;font-size:12px;font-weight:800;
 }
-.thumb{
-  width:100%;
-  height:100%;
-  min-height:114px;
-  border-radius:0;
-  object-fit:cover;
-  display:block;
+.mapwrap.loaded .map-loading{display:none}
+.map-fallback{
+  display:block;margin:0 12px 12px;padding:10px 12px;border-radius:12px;
+  background:#fff;color:#111;text-align:center;text-decoration:none;
+  font-size:11px;font-weight:900;
 }
-.card-time{
-  position:absolute;
-  left:8px;
-  top:8px;
-  z-index:2;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-width:42px;
-  height:28px;
-  padding:0 9px;
-  border-radius:999px;
-  background:rgba(15,15,15,.78);
-  color:#fff;
-  border:1px solid rgba(255,255,255,.18);
-  backdrop-filter:blur(10px);
-  font-size:11px;
-  font-weight:950;
-  letter-spacing:.02em;
-}
-.route-copy{
-  min-width:0;
-  padding:7px 2px 7px 0;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-}
-.route-card h3{
-  font-size:17px;
-  line-height:1.12;
-  margin:0 0 5px;
-}
-.route-card p{
-  font-size:11.5px;
-  line-height:1.35;
-  margin:0 0 9px;
-  display:-webkit-box;
-  -webkit-line-clamp:2;
-  -webkit-box-orient:vertical;
-  overflow:hidden;
-}
-.meta{
-  display:flex;
-  gap:5px;
-  flex-wrap:wrap;
-  align-items:center;
-}
-.meta span{
-  display:inline-flex;
-  align-items:center;
-  gap:4px;
-  font-size:9px;
-  font-weight:850;
-  border-radius:999px;
-  padding:5px 7px;
-  background:#f1efe9;
-  color:#555;
-}
-.meta .transport{
-  background:#eceff4;
-  color:#2d3440;
-}
-.meta .duration{
-  background:#f5f1e7;
-  color:#5f5033;
-}
-.chev{
-  align-self:center;
-  justify-self:center;
-  padding-right:2px;
-}
-@media(max-width:520px){
-  .route-card{grid-template-columns:44% 1fr 18px;min-height:118px;padding:4px;gap:8px}
-  .thumbwrap,.thumb{min-height:110px}
-  .route-card h3{font-size:16px}
-  .route-card p{font-size:11px}
-  .meta span{font-size:8.5px;padding:4px 6px}
-  .card-time{left:7px;top:7px;height:26px;min-width:40px;font-size:10px}
-}
-
-
-/* v9.3 fixed card geometry */
-.route-card{
-  height:136px;
-  min-height:136px;
-  max-height:136px;
-  grid-template-columns:35% 1fr 18px;
-  padding:4px;
-  gap:10px;
-}
-.thumbwrap{
-  height:128px;
-  min-height:128px;
-  max-height:128px;
-  border-radius:16px 0 0 16px;
-}
-.thumb{
-  height:128px;
-  min-height:128px;
-  max-height:128px;
-}
-.card-time{
-  left:10px;
-  bottom:10px;
-  top:auto;
-  height:32px;
-  min-width:52px;
-  padding:0 11px;
-  border-radius:12px;
-  background:rgba(255,255,255,.92);
-  color:#171717;
-  border:1px solid rgba(0,0,0,.08);
-  box-shadow:0 4px 14px rgba(0,0,0,.12);
-  backdrop-filter:blur(10px);
-  font-size:12px;
-  font-weight:950;
-  letter-spacing:.015em;
-}
-.route-copy{
-  height:128px;
-  padding:10px 2px 8px 0;
-  justify-content:flex-start;
-  overflow:hidden;
-}
-.route-card h3{
-  font-size:17px;
-  line-height:1.14;
-  margin:0 0 5px;
-  display:-webkit-box;
-  -webkit-line-clamp:2;
-  -webkit-box-orient:vertical;
-  overflow:hidden;
-  min-height:38px;
-  max-height:38px;
-}
-.route-card p{
-  font-size:11.5px;
-  line-height:1.32;
-  margin:0 0 8px;
-  display:-webkit-box;
-  -webkit-line-clamp:2;
-  -webkit-box-orient:vertical;
-  overflow:hidden;
-  min-height:30px;
-  max-height:30px;
-}
-.meta{
-  margin-top:auto;
-  flex-wrap:nowrap;
-  overflow:hidden;
-}
-.meta span{
-  flex:0 1 auto;
-  max-width:58%;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-.meta .duration{
-  max-width:40%;
-}
-.chev{
-  height:128px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-@media(max-width:520px){
-  .route-card{
-    height:128px;
-    min-height:128px;
-    max-height:128px;
-    grid-template-columns:36% 1fr 16px;
-  }
-  .thumbwrap,.thumb{
-    height:120px;
-    min-height:120px;
-    max-height:120px;
-  }
-  .route-copy{height:120px;padding-top:9px}
-  .route-card h3{font-size:15.5px;min-height:35px;max-height:35px}
-  .route-card p{font-size:10.8px;min-height:29px;max-height:29px}
-  .chev{height:120px}
-  .card-time{left:8px;bottom:8px;height:30px;min-width:48px;font-size:11px;border-radius:11px}
-}
-
-
-.route-card{font:inherit;color:inherit;text-align:left;width:100%}
-.route-card:focus-visible{outline:2px solid #111;outline-offset:2px}
-
-
-/* v9.5 click + image radius fix */
-.route-card{cursor:pointer;position:relative}
-.thumbwrap{
-  border-radius:16px 0 0 16px !important;
-  overflow:hidden;
-}
-.thumb{
-  border-radius:16px 0 0 16px !important;
-}
-.detail[hidden]{display:none !important}
-.detail:not([hidden]){display:block !important;visibility:visible !important;opacity:1 !important;pointer-events:auto !important}
-
-/* v10 — rebuilt detail */
-.detail[hidden]{display:none!important}
-.detail{
-  position:fixed; inset:0; z-index:1000; background:#000; color:#fff;
-  overscroll-behavior:none;
-}
-.detail-visual{position:absolute;inset:0;overflow:hidden;background:#111}
-.detail-visual>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-.detail-gradient{
-  position:absolute;inset:0;
-  background:
-    linear-gradient(to bottom,rgba(0,0,0,.24) 0%,rgba(0,0,0,.03) 34%,rgba(0,0,0,.14) 50%,rgba(0,0,0,.82) 69%,rgba(0,0,0,.98) 100%);
-}
-.storybar{
-  position:absolute;z-index:8;top:max(12px,env(safe-area-inset-top));left:62px;right:122px;
-  display:flex;gap:4px;
-}
-.storyseg{height:3px;flex:1;background:rgba(255,255,255,.3);border-radius:99px;overflow:hidden}
-.storyfill{height:100%;width:0;background:#fff}
-.storyseg.done .storyfill{width:100%}
-.storyseg.active .storyfill{animation:storyfill 5s linear forwards}
-@keyframes storyfill{from{width:0}to{width:100%}}
-.storytap{
-  position:absolute;z-index:4;top:54px;bottom:48%;width:50%;border:0;background:transparent;
-}
-.storytap-left{left:0}.storytap-right{right:0}
-.detail-topbar{
-  position:absolute;z-index:9;top:max(10px,env(safe-area-inset-top));left:12px;right:12px;
-  display:flex;justify-content:space-between;align-items:center;
-}
-.detail-tools{display:flex;gap:8px}
-.icon-btn{
-  width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.22);
-  color:#fff;font-size:20px;font-weight:800;display:grid;place-items:center;
-}
-.glass{background:rgba(12,12,12,.48);backdrop-filter:blur(14px)}
-.detail-copy{
-  position:absolute;z-index:6;left:0;right:0;bottom:0;
-  padding:18px 18px max(18px,env(safe-area-inset-bottom));
-}
-.detail-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
-.detail-chips span{
-  border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);backdrop-filter:blur(12px);
-  border-radius:999px;padding:6px 9px;font-size:10px;font-weight:900;color:#fff;
-}
-.detail-copy h2{
-  margin:0 0 6px;font-size:clamp(32px,9vw,46px);line-height:.96;letter-spacing:-.055em;
-  max-width:680px;
-}
-.detail-subtitle{font-size:13px;font-weight:800;color:#d8d8d8;margin-bottom:10px}
-.detail-desc{
-  margin:0 0 14px;max-width:640px;font-size:13.5px;line-height:1.48;color:#ececec;
-  display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;
-}
-.live-plan{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:5px}
-.live-field{
-  display:flex;align-items:center;gap:7px;border:1px solid rgba(255,255,255,.18);
-  background:rgba(255,255,255,.09);backdrop-filter:blur(10px);border-radius:12px;padding:8px 10px;
-}
-.live-field span{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#bbb;font-weight:900}
-.live-field input,.live-field select{
-  border:0;outline:0;background:transparent;color:#fff;font:inherit;font-size:12px;font-weight:900;
-}
-.live-field option{color:#111}
-.recalc{font-size:9.5px;color:#aaa;margin:4px 1px 12px}
-.detail-actionbar{
-  display:grid;grid-template-columns:42px 1fr 1fr 42px;gap:8px;align-items:center;
-}
-.round-nav{
-  width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.22);
-  background:rgba(255,255,255,.1);color:#fff;font-size:24px;line-height:1;
-}
-.main-action{
-  min-height:42px;border-radius:13px;border:1px solid rgba(255,255,255,.18);
-  background:#fff;color:#111;font-size:11px;font-weight:950;
-}
-.main-action.secondary{background:rgba(255,255,255,.1);color:#fff}
-.main-action.done{background:#dff4e7;color:#18733e}
-.main-action.skip{background:#4b1d18;color:#ffd6d1}
-.route-link{
-  display:block;margin-top:8px;text-align:center;color:#d8d8d8;text-decoration:none;font-size:10px;font-weight:800;
-}
-.detail-hint{text-align:center;margin-top:7px;color:#888;font-size:9px}
-.floating-panel{
-  position:absolute;z-index:20;top:max(64px,calc(env(safe-area-inset-top) + 56px));right:12px;
-  width:min(88vw,370px);max-height:54%;background:rgba(18,18,18,.93);
-  border:1px solid rgba(255,255,255,.14);border-radius:20px;overflow:hidden;
-  backdrop-filter:blur(20px);box-shadow:0 24px 70px rgba(0,0,0,.45);
-}
-.panel-head{display:flex;justify-content:space-between;align-items:flex-start;padding:14px;border-bottom:1px solid rgba(255,255,255,.1)}
-.panel-head small{font-size:9px;color:#999;font-weight:900;letter-spacing:.08em}
-.panel-head h3{font-size:18px;margin:2px 0 0}
-.panel-close{border:0;background:transparent;color:#fff;font-size:26px}
-.notes-list{max-height:260px;overflow:auto;padding:10px;display:flex;flex-direction:column;gap:8px}
-.note-row-wrap{position:relative;overflow:hidden;border-radius:13px}
-.note-delete{position:absolute;right:0;top:0;bottom:0;width:70px;border:0;background:#c84035;color:white;font-weight:900}
-.note-row{
-  position:relative;z-index:2;display:flex;align-items:center;gap:10px;background:#2b2b2b;
-  border:1px solid rgba(255,255,255,.08);border-radius:13px;padding:11px;transition:transform .16s ease;
-}
-.note-row.reveal{transform:translateX(-70px)}
-.note-row.checked{opacity:.5}.note-row.checked .note-text{text-decoration:line-through}
-.note-check{width:22px;height:22px;border:1.5px solid #6d6d6d;border-radius:7px;background:transparent;color:#111}
-.note-row.checked .note-check{background:#fff;border-color:#fff}.note-text{font-size:13px;line-height:1.35}
-.note-composer{display:grid;grid-template-columns:1fr 40px;gap:7px;padding:10px;border-top:1px solid rgba(255,255,255,.1)}
-.note-composer input{min-width:0;border:0;border-radius:12px;padding:11px 12px;font-size:16px;outline:0}
-.note-composer button{border:0;border-radius:12px;background:#fff;font-size:18px;font-weight:900}
-.panel-help{padding:0 12px 11px;color:#888;font-size:9px}
-.map-frame{height:240px;background:#ddd}
-.map-frame iframe{width:100%;height:100%;border:0;display:block}
-.map-summary{padding:12px 14px;font-size:12px;line-height:1.45;color:#d8d8d8}
-.panel-route-link{display:block;margin:0 12px 12px;padding:11px;border-radius:12px;background:#fff;color:#111;text-align:center;text-decoration:none;font-size:11px;font-weight:900}
-@media(max-width:520px){
-  .detail-copy{padding-left:14px;padding-right:14px}
-  .detail-desc{-webkit-line-clamp:3}
-  .detail-actionbar{grid-template-columns:40px 1fr 1fr 40px}
-  .floating-panel{left:12px;right:12px;width:auto}
-}
-@media(prefers-reduced-motion:reduce){.storyseg.active .storyfill{animation:none;width:100%}}
-
-</style>
-</head>
+</style></head>
 <body>
-<div class="app">
-  <div class="topnav">
-    <div class="days" id="days"></div>
-    <div class="route-summary" id="summary"></div>
-  </div>
-  <h1 class="daytitle" id="daytitle"></h1>
-  <div class="list" id="list"></div>
-</div>
-
+<div class="app"><div class="top"><div class="days" id="days"></div><div class="summary" id="summary"></div></div><h1 class="daytitle" id="daytitle"></h1><div class="list" id="list"></div></div>
 
 <div class="detail" id="detail" hidden>
-  <div class="detail-visual">
-    <img id="detailImg" alt="">
-    <div class="detail-gradient"></div>
-
-    <div class="storybar" id="storybar"></div>
-    <button class="storytap storytap-left" type="button" aria-label="Önceki görsel"></button>
-    <button class="storytap storytap-right" type="button" aria-label="Sonraki görsel"></button>
-
-    <div class="detail-topbar">
-      <button class="icon-btn glass" id="closeDetailBtn" type="button" aria-label="Detayı kapat">‹</button>
-      <div class="detail-tools">
-        <button class="icon-btn glass" id="noteToggle" type="button" aria-label="Notlar">✎</button>
-        <button class="icon-btn glass" id="mapToggle" type="button" aria-label="Harita">⌖</button>
-      </div>
-    </div>
-
-    <section class="detail-copy">
-      <div class="detail-chips" id="detailMeta"></div>
-      <h2 id="detailTitle"></h2>
-      <div class="detail-subtitle" id="detailSub"></div>
-      <p class="detail-desc" id="detailDesc"></p>
-
-      <div class="live-plan">
-        <label class="live-field">
-          <span>Başlangıç</span>
-          <input id="startTimeInput" type="time">
-        </label>
-        <label class="live-field">
-          <span>Kalış</span>
-          <select id="durationInput">
-            <option value="30">30 dk</option>
-            <option value="45">45 dk</option>
-            <option value="60">1 saat</option>
-            <option value="75">1 sa 15 dk</option>
-            <option value="90">1 sa 30 dk</option>
-            <option value="120">2 saat</option>
-            <option value="150">2 sa 30 dk</option>
-            <option value="180">3 saat</option>
-          </select>
-        </label>
-      </div>
-      <div class="recalc" id="recalcInfo"></div>
-
-      <div class="detail-actionbar">
-        <button class="round-nav" id="prevStopBtn" type="button" aria-label="Önceki durak">‹</button>
-        <button class="main-action" id="detailDone" type="button">✓ Gidildi</button>
-        <button class="main-action secondary" id="detailSkip" type="button">Atla</button>
-        <button class="round-nav" id="nextStopBtn" type="button" aria-label="Sonraki durak">›</button>
-      </div>
-
-      <a class="route-link" id="detailRoute" target="_blank" rel="noopener">Google Maps'te yol tarifini aç ↗</a>
-      <div class="detail-hint">Görselde sağ/sola dokun: fotoğraf · ekranı kaydır: durak</div>
-    </section>
+  <div class="hero"><img id="heroImg" alt=""><div class="gradient"></div><div class="story" id="story"></div><button class="tap left" id="photoPrev" type="button"></button><button class="tap right" id="photoNext" type="button"></button></div>
+  <div class="topbar"><button class="icon" id="backBtn" type="button" aria-label="Rota listesine dön"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10.5 12 3.5l8.5 7"/><path d="M5.5 9v11h13V9"/><path d="M9.5 20v-6h5v6"/></svg></button><div class="tools"><button class="icon" id="noteBtn" type="button" aria-label="Notlar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h8.5L20.5 8v12.5H7z"/><path d="M15.5 3.5V8h5"/><path d="M10 12h7M10 16h5"/></svg></button><button class="icon" id="mapBtn" type="button" aria-label="Harita"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3.5 6.5 5-2.5 7 2.5 5-2.5v14l-5 2.5-7-2.5-5 2.5z"/><path d="M8.5 4v14M15.5 6.5v14"/></svg></button></div></div>
+  <div class="detailcopy"><div class="chips" id="dmeta"></div><h2 id="dtitle"></h2><div class="sub" id="dsub"></div><p class="desc" id="ddesc"></p>
+    <div class="live"><label class="field"><span>Başlangıç</span><input id="startInput" type="time"></label><label class="field"><span>Kalış</span><select id="durInput"><option value="30">30 dk</option><option value="45">45 dk</option><option value="60">1 saat</option><option value="75">1 sa 15 dk</option><option value="90">1 sa 30 dk</option><option value="120">2 saat</option><option value="150">2 sa 30 dk</option><option value="180">3 saat</option></select></label></div>
+    <div class="actions"><button class="nav" id="prevBtn" type="button" aria-label="Önceki durak"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7"/></svg></button><button class="act" id="doneBtn" type="button">✓ Gidildi</button><button class="act alt" id="skipBtn" type="button">Atla</button><button class="nav" id="nextBtn" type="button" aria-label="Sonraki durak"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button></div>
+    <a class="route" id="routeLink" target="_blank" rel="noopener">Google Maps'te yol tarifini aç ↗</a>
   </div>
-
-  <aside class="floating-panel notes-panel" id="notesPanel" hidden>
-    <div class="panel-head">
-      <div>
-        <small>BU DURAK</small>
-        <h3>Notlar / checklist</h3>
-      </div>
-      <button class="panel-close" id="notesCloseBtn" type="button">×</button>
-    </div>
-    <div class="notes-list" id="notesList"></div>
-    <form class="note-composer" id="noteForm">
-      <input id="noteInput" type="text" placeholder="Bir not yaz, Enter ile ekle…" autocomplete="off">
-      <button type="submit">↑</button>
-    </form>
-    <div class="panel-help">İşaretlemek için checkbox'a dokun. Silmek için notu sola kaydır.</div>
-  </aside>
-
-  <aside class="floating-panel map-panel" id="mapPanel" hidden>
-    <div class="panel-head">
-      <div>
-        <small>SONRAKİ ADIM</small>
-        <h3 id="mapPanelTitle">Rota</h3>
-      </div>
-      <button class="panel-close" id="mapCloseBtn" type="button">×</button>
-    </div>
-    <div class="map-frame">
-      <iframe id="mapFrame" title="Google Maps rota görünümü" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </div>
-    <div class="map-summary" id="mapSummary"></div>
-    <a class="panel-route-link" id="mapExternal" target="_blank" rel="noopener">Google Maps'te aç ↗</a>
-  </aside>
+  <aside class="panel" id="notesPanel" hidden><div class="phead"><div><small>BU DURAK</small><h3>Notlar / checklist</h3></div><button class="close" id="noteClose" type="button">×</button></div><div class="notes" id="notesList"></div><form class="nform" id="noteForm"><input id="noteInput" placeholder="Bir not yaz, Enter ile ekle…"><button>↑</button></form></aside>
+  <aside class="panel" id="mapPanel" hidden><div class="phead"><div><small>SONRAKİ ADIM</small><h3>Harita</h3></div><button class="close" id="mapClose" type="button">×</button></div><div class="mapwrap" id="mapWrap"><div class="map-loading">Harita yükleniyor…</div><iframe id="mapFrame" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><div class="mapsum" id="mapSummary"></div><a class="map-fallback" id="mapFallback" target="_blank" rel="noopener">Google Maps’te aç ↗</a></aside>
 </div>
 
 <script>
-const DAYS=[{"id": "sun", "label": "Paz 20", "title": "Pazar · Rahat başlangıç", "route": "Otel → Rockefeller → 5th Ave → Times Square", "items": [{"title": "Rockefeller Center + FAO + LEGO", "subtitle": "İlk gün, otelin çevresinde sakin başlangıç", "time": "15:40", "duration": "60–70 dk", "tag": "Yürüyüş", "travel": "Otelden 5–7 dk yürüyüş", "desc": "Plaza ve Channel Gardens çevresinde dolaş. Enerji varsa FAO Schwarz ve LEGO Store’a gir. İlk gün metro yok.", "maps": "https://www.google.com/maps/search/?api=1&query=Rockefeller%20Center%20New%20York", "img": "https://images.unsplash.com/photo-1522083165195-3424ed129620?auto=format&fit=crop&w=1400&q=82", "images": ["https://images.unsplash.com/photo-1522083165195-3424ed129620?auto=format&fit=crop&w=1400&q=82", "https://offloadmedia.feverup.com/secretnyc.co/wp-content/uploads/2023/02/02135024/Under-30-Rockefeller-Center-Plaza.jpeg"]}, {"title": "5th Avenue", "subtitle": "İkonik çanta + kısa cadde yürüyüşü", "time": "17:00", "duration": "35–45 dk", "tag": "Gezinti", "travel": "Rockefeller’dan 10–12 dk yürüyüş", "desc": "Mağaza mağaza gezmek yerine caddenin atmosferini yaşa. İkonik çanta noktasını gör, birkaç fotoğraf çek ve devam et.", "maps": "https://www.google.com/maps/search/?api=1&query=Fifth%20Avenue%20New%20York", "img": "https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?auto=format&fit=crop&w=1400&q=82", "images": ["https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?auto=format&fit=crop&w=1400&q=82", "https://q8yusa.com/wp-content/uploads/2021/07/Fifth-Avenue-New-York-City-New-York.jpg"]}, {"title": "Times Square + M&M’s", "subtitle": "İlk günün New York anı", "time": "17:55", "duration": "40–50 dk", "tag": "Keyif", "travel": "5th Ave’den 15–18 dk yürüyüş", "desc": "Meydanda otur, ekranları izle, fotoğraf çek. M&M’s mağazasını da bugün bitir.", "maps": "https://www.google.com/maps/search/?api=1&query=Times%20Square%20New%20York", "img": "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=1400&q=82", "images": ["https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=1400&q=82", "https://www.kapiert.de/media/image/94E87958/D1A2516F/8E98F701/177FBBC9.png"]}]}, {"id": "mon", "label": "Pzt 21", "title": "Pazartesi · Lower Manhattan → SoHo", "route": "Otel → Wall St → Oculus → Mercer Labs → SoHo → Little Italy → Chinatown", "items": [{"title": "Wall Street + Charging Bull", "subtitle": "Financial District başlangıcı", "time": "09:00", "duration": "45–60 dk", "tag": "Gezinti", "travel": "Otel → metro + kısa yürüyüş", "desc": "Charging Bull, Bowling Green, Wall Street, NYSE ve Federal Hall çevresini tek blok olarak gez.", "maps": "https://www.google.com/maps/search/?api=1&query=Charging%20Bull%20New%20York", "img": "https://images.unsplash.com/photo-1689582236730-fa3076847f45?auto=format&fit=crop&w=1400&q=82", "images": ["https://images.unsplash.com/photo-1689582236730-fa3076847f45?auto=format&fit=crop&w=1400&q=82", "https://img3.s3wfg.com/web/img/images_uploaded/b/9/wall_street_20260316112410.jpg"]}, {"title": "The Oculus", "subtitle": "World Trade Center mimarisi", "time": "10:15", "duration": "35–45 dk", "tag": "Mimari", "travel": "Wall Street’ten 12–15 dk yürüyüş", "desc": "İç mekânı ve ana aksı gör. Buradan Mercer Labs’a geçiş çok kısa.", "maps": "https://www.google.com/maps/search/?api=1&query=Oculus%20World%20Trade%20Center", "img": "https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=1400&q=82", "images": ["https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=1400&q=82", "https://cs11.pikabu.ru/post_img/2018/11/02/10/1541179194192856847.jpg"]}, {"title": "Mercer Labs", "subtitle": "Museum of Art & Technology", "time": "11:00", "duration": "60–90 dk", "tag": "Deneyim", "travel": "Oculus’tan 2–4 dk yürüyüş", "desc": "21 Dey Street. Oculus’un hemen yanında olduğu için bu güne yerleştirildi. İçeride 60–90 dakika ayırmak mantıklı.", "maps": "https://www.google.com/maps/search/?api=1&query=Mercer%20Labs%2021%20Dey%20Street%20New%20York", "img": "https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&w=1400&q=82", "images": ["https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&w=1400&q=82", "https://cdn.getyourguide.com/img/tour/6aa7bd1f7e499bc1227d22fb1a5bc881b3baca3818dada21eee8062193424ced.jpg/145.jpg"]}, {"title": "SoHo", "subtitle": "Mercer → Greene → Prince Street", "time": "13:15", "duration": "60 dk", "tag": "Mahalle", "travel": "Downtown’dan metro veya 20+ dk yürüyüş", "desc": "Mimari, vitrinler ve sokak dokusu. Buradan Little Italy ve Chinatown’a yürüyerek devam et.", "maps": "https://www.google.com/maps/search/?api=1&query=SoHo%20New%20York", "img": "https://images.unsplash.com/photo-1528988719300-046ff7faf8cb?auto=format&fit=crop&w=1400&q=82", "images": ["https://images.unsplash.com/photo-1528988719300-046ff7faf8cb?auto=format&fit=crop&w=1400&q=82", "https://static.independent.co.uk/2025/03/28/16/19/SoHo--Credit-Julienne-SchaerNYC-Tourism-Conventions.jpeg?crop=3000%2C1575%2Cx0%2Cy212.5&height=630&width=1200"]}, {"title": "Little Italy → Chinatown", "subtitle": "Mulberry → Doyers → Mott", "time": "14:30", "duration": "90+ dk", "tag": "Mahalle", "travel": "SoHo’dan 10–15 dk yürüyüş", "desc": "Little Italy’den Chinatown’a yürüyerek geç. Doyers Street ve Mott Street çevresini gör.", "maps": "https://www.google.com/maps/search/?api=1&query=Chinatown%20New%20York", "img": "https://images.unsplash.com/photo-1546436836-07a91091f160?auto=format&fit=crop&w=1400&q=82", "images": ["https://images.unsplash.com/photo-1546436836-07a91091f160?auto=format&fit=crop&w=1400&q=82", "https://image-worker.mindtrip.ai/image-resize/format%3Dwebp%2Cw%3D1200/https%3A/images.mindtrip.ai/attractions/6061/0b66/62dd/8afc/ac71/678c/225b/32d3"]}]}, {"id": "tue", "label": "Sal 22", "title": "Salı · Uptown → Broadway", "route": "Otel → AMNH → Central Park → Bryant Park → Wicked → Times Square", "items": [{"title": "American Museum of Natural History", "subtitle": "AMNH", "time": "09:30", "duration": "2–3 saat", "tag": "Müze", "travel": "Otel → subway + kısa yürüyüş", "desc": "Günün en uzun iç mekân durağı. Tamamını bitirmeye çalışma; seçili galerilerle ilerle.", "maps": "https://www.google.com/maps/search/?api=1&query=American%20Museum%20of%20Natural%20History", "img": "https://images.unsplash.com/photo-1564399579883-451a5d44ec08?auto=format&fit=crop&w=1400&q=82", "images": ["https://images.unsplash.com/photo-1564399579883-451a5d44ec08?auto=format&fit=crop&w=1400&q=82", "https://imgcap.capturetheatlas.com/wp-content/uploads/2020/04/Upper-West-Side-where-to-stay-in-NYC.jpg"]}, {"title": "Central Park", "subtitle": "Müze çıkışı park geçişi", "time": "12:30", "duration": "75–90 dk", "tag": "Park", "travel": "Müze çıkışı direkt yürüyüş", "desc": "AMNH’den çıkınca parkı batıdan doğuya doğru kes. Bow Bridge / Bethesda tarafını enerjiye göre seç.", "maps": "https://www.google.com/maps/search/?api=1&query=Central%20Park%20New%20York", "img": "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1400&q=82", "images": ["https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1400&q=82", "https://filmoblivion.com/wp-content/uploads/2018/07/homealone2-4.jpg"]}, {"title": "Bryant Park + NYPL", "subtitle": "Kahve + kısa mimari molası", "time": "15:15", "duration": "60 dk", "tag": "Mola", "travel": "Parktan subway / yürüyüş kombinasyonu", "desc": "Bryant Park’ta otur, sonra New York Public Library ana cephesini ve mümkünse ana salonu gör.", "maps": "https://www.google.com/maps/search/?api=1&query=Bryant%20Park%20New%20York", "img": "https://images.unsplash.com/photo-1541336032412-2048a678540d?auto=format&fit=crop&w=1400&q=82", "images": ["https://images.unsplash.com/photo-1541336032412-2048a678540d?auto=format&fit=crop&w=1400&q=82", "https://architizer-prod.imgix.net/media/mediadata/uploads/1511262666099Bryant_Park-2874.jpg?auto=format%2Ccompress&cs=strip&q=60&w=1680"]}, {"title": "Wicked · Broadway", "subtitle": "Gershwin Theatre", "time": "19:00", "duration": "~2 sa 45 dk", "tag": "Etkinlik", "travel": "Bryant Park’tan 15–20 dk yürüyüş", "desc": "Gösteri için en az 30–45 dakika önce tiyatro çevresinde ol.", "maps": "https://www.google.com/maps/search/?api=1&query=Gershwin%20Theatre%20New%20York", "img": "https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=1400&q=82", "images": ["https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=1400&q=82", "https://www.belvederehotelnyc.com/hs-fs/hubfs/The%20Pearl/Website/shutterstock_2214444773%20edited%20%281%29.webp?height=1000&name=shutterstock_2214444773+edited+%281%29.webp&width=1500"]}, {"title": "Times Square · gece", "subtitle": "Gösteri çıkışında", "time": "Çıkışta", "duration": "Serbest", "tag": "Gece", "travel": "Tiyatrodan birkaç dakika yürüyüş", "desc": "Broadway çıkışında Times Square’dan geç. Bu ayrı bir gündüz durağı değil; sadece gece atmosferi.", "maps": "https://www.google.com/maps/search/?api=1&query=Times%20Square%20New%20York", "img": "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=1400&q=82", "images": ["https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=1400&q=82", "https://www.kapiert.de/media/image/94E87958/D1A2516F/8E98F701/177FBBC9.png"]}]}, {"id": "wed", "label": "Çar 23", "title": "Çarşamba · Brooklyn şafak → Downtown → Campbell", "route": "Otel → Brooklyn Bridge → DUMBO → Staten Island Ferry → Grand Central → The Campbell", "items": [{"title": "Brooklyn Bridge", "subtitle": "Erken saat · kalabalık başlamadan", "time": "06:00", "duration": "45–60 dk", "tag": "Erken", "travel": "Otel → subway + yürüyüş", "desc": "Köprüyü mümkün olduğunca kalabalık başlamadan geç. Fotoğraf için günün en doğru zamanı.", "maps": "https://www.google.com/maps/search/?api=1&query=Brooklyn%20Bridge%20New%20York", "img": "https://images.unsplash.com/photo-1517639493569-5666a7b2f494?auto=format&fit=crop&w=1400&q=82", "images": ["https://images.unsplash.com/photo-1517639493569-5666a7b2f494?auto=format&fit=crop&w=1400&q=82", "https://www.delta.com/content/dam/delta-www/responsive/dlv/sample-itineraries/nyc/nyc-brooklynsunrise-m.jpg"]}, {"title": "DUMBO", "subtitle": "Washington Street + Brooklyn Bridge Park", "time": "07:15", "duration": "75–90 dk", "tag": "Mahalle", "travel": "Köprüden 5–10 dk yürüyüş", "desc": "Washington Street fotoğraf noktası ve waterfront. Sabah saatleri burada da büyük avantaj.", "maps": "https://www.google.com/maps/search/?api=1&query=DUMBO%20Brooklyn%20New%20York", "img": "https://images.unsplash.com/photo-1522083165195-3424ed129620?auto=format&fit=crop&w=1400&q=82", "images": ["https://images.unsplash.com/photo-1522083165195-3424ed129620?auto=format&fit=crop&w=1400&q=82", "https://d2cbe6qj96hbor.cloudfront.net/puzzles/XNNJG13K2WPR8FHZ.jpg"]}, {"title": "Staten Island Ferry", "subtitle": "Whitehall ↔ St. George", "time": "10:00", "duration": "60–75 dk", "tag": "Ferry", "travel": "DUMBO → subway + terminal yürüyüşü", "desc": "Ücretsiz feribotla gidiş-dönüş yap. Özgürlük Heykeli ve Lower Manhattan görünümü için.", "maps": "https://www.google.com/maps/search/?api=1&query=Whitehall%20Terminal%20New%20York", "img": "https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?auto=format&fit=crop&w=1400&q=82", "images": ["https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?auto=format&fit=crop&w=1400&q=82"]}, {"title": "Grand Central + The Campbell", "subtitle": "Akşam tek blok", "time": "Akşam", "duration": "Serbest", "tag": "Bar", "travel": "Otele yakın, yürüyüş mesafesi", "desc": "Grand Central’ı ayrıca ayrı bir tur haline getirmeden, The Campbell öncesi terminali gör. Ardından Campbell’da akşamı kapat.", "maps": "https://www.google.com/maps/search/?api=1&query=The%20Campbell%20Grand%20Central%20New%20York", "img": "https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&w=1400&q=82", "images": ["https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&w=1400&q=82", "https://images.unsplash.com/photo-1750077808512-c1b268228b91?auto=format&fit=crop&fm=jpg&q=70&w=1800"]}]}, {"id": "thu", "label": "Per 24", "title": "Perşembe · West Side → House of Yes", "route": "Otel → Hudson Yards → High Line → Pier 57 → House of Yes", "items": [{"title": "Hudson Yards + Vessel", "subtitle": "West Side başlangıcı", "time": "11:00", "duration": "60 dk", "tag": "Mimari", "travel": "Otel → 7 treni / kısa yürüyüş", "desc": "Vessel çevresi ve Hudson Yards. Buradan High Line yönünde güneye in.", "maps": "https://www.google.com/maps/search/?api=1&query=Vessel%20Hudson%20Yards%20New%20York", "img": "https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&w=1400&q=82", "images": ["https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&w=1400&q=82", "https://cdn.prod.website-files.com/66e8bf9f0c4e10bd38c998f8/699737de60ce525322c3b742_Vessel%20in%20New%20York%20City_exterior%20dusk%20view_Courtesy%20of%20Vessel-p-2600.jpg"]}, {"title": "High Line → Pier 57", "subtitle": "Yavaş yürüyüş + Hudson molası", "time": "12:15", "duration": "90–120 dk", "tag": "Yürüyüş", "travel": "Hudson Yards’tan kesintisiz yürüyüş", "desc": "High Line üzerinde güneye in ve Pier 57’de Hudson manzarasıyla mola ver.", "maps": "https://www.google.com/maps/search/?api=1&query=Pier%2057%20New%20York", "img": "https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&w=1400&q=82", "images": ["https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&w=1400&q=82", "https://habitability.com.br/wp-content/uploads/2024/08/high-line-park.webp"]}, {"title": "House of Yes", "subtitle": "Günün sonu · Brooklyn", "time": "Gece", "duration": "Etkinliğe göre", "tag": "Etkinlik", "travel": "West Side → subway + kısa yürüyüş", "desc": "Perşembe gününün son ve sabit durağı. Gündüz planını burada bitecek şekilde gevşek bırak.", "maps": "https://www.google.com/maps/search/?api=1&query=House%20of%20Yes%20Brooklyn%20New%20York", "img": "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&fit=crop&w=1400&q=82", "images": ["https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&fit=crop&w=1400&q=82", "https://i.insider.com/5a1dd2b8f914c357018b6922?auto=webp&format=jpeg&width=800"]}]}, {"id": "fri", "label": "Cum 25", "title": "Cuma · Kısa sabah → havaalanı", "route": "Otel → Roosevelt Island Tram → Otel → Havaalanı", "items": [{"title": "Roosevelt Island Tram", "subtitle": "Son sabah için tek kısa rota", "time": "09:00", "duration": "75–90 dk", "tag": "Tram", "travel": "Otel → doğuya yürüyüş / subway", "desc": "Son sabah uzun bir bölge açmak yerine Roosevelt Island Tram’ı tek başına yap. Sonra otele dön, check-out ve transfer.", "maps": "https://www.google.com/maps/search/?api=1&query=Roosevelt%20Island%20Tramway%20Manhattan", "img": "https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=1400&q=82", "images": ["https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=1400&q=82", "https://www.archnewsnow.com/features/images/Feature0118_02x.jpg"]}, {"title": "Hilton → Havaalanı", "subtitle": "Check-out + transfer", "time": "15:00", "duration": "Uçuşa göre", "tag": "Transfer", "travel": "Havaalanına göre rota", "desc": "12:00 check-out sonrası valizleri otelde bırak. 15:00 havaalanı hareketi sabit.", "maps": "https://www.google.com/maps/search/?api=1&query=Hilton%20Garden%20Inn%20New%20York%20Times%20Square%20North", "img": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1400&q=82", "images": ["https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1400&q=82"]}]}];
-let dayIndex=0,detailIndex=0;
-const states=JSON.parse(localStorage.getItem('nyc-states-v7')||'{}');
-const notes=JSON.parse(localStorage.getItem('nyc-notes-v8')||'{}');
-const timing=JSON.parse(localStorage.getItem('nyc-timing-v9')||'{}');
-let storyIndex=0,storyTimer=null;
+const DAYS=[{"id": "sun", "label": "Paz 20", "title": "Pazar · Rahat başlangıç", "route": "Otel → Rockefeller → 5th Ave → Times Square", "items": [{"title": "Rockefeller Center + FAO + LEGO", "subtitle": "İlk gün, otelin çevresinde sakin başlangıç", "time": "15:40", "duration": 60, "tag": "Yürüyüş", "travel": "5–7 dk yürüyüş", "desc": "Plaza ve Channel Gardens çevresinde dolaş. Enerji varsa FAO Schwarz ve LEGO Store’a gir. İlk gün metro yok.", "maps": "https://www.google.com/maps/search/?api=1&query=Rockefeller%20Center%20New%20York", "images": ["https://images.unsplash.com/photo-1522083165195-3424ed129620?auto=format&fit=crop&w=1400&q=82", "https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?auto=format&fit=crop&w=1400&q=82"]}, {"title": "5th Avenue", "subtitle": "İkonik çanta + kısa cadde yürüyüşü", "time": "17:00", "duration": 45, "tag": "Gezinti", "travel": "10–12 dk yürüyüş", "desc": "Caddenin atmosferini yaşa, ikonik çanta noktasını gör ve birkaç fotoğraf çek.", "maps": "https://www.google.com/maps/search/?api=1&query=Fifth%20Avenue%20New%20York", "images": ["https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?auto=format&fit=crop&w=1400&q=82", "https://images.unsplash.com/photo-1528988719300-046ff7faf8cb?auto=format&fit=crop&w=1400&q=82"]}, {"title": "Times Square + M&M’s", "subtitle": "İlk günün New York anı", "time": "17:55", "duration": 45, "tag": "Keyif", "travel": "15–18 dk yürüyüş", "desc": "Meydanda otur, ekranları izle, fotoğraf çek. M&M’s mağazasını da bugün bitir.", "maps": "https://www.google.com/maps/search/?api=1&query=Times%20Square%20New%20York", "images": ["https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=1400&q=82", "https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=1400&q=82"]}]}, {"id": "mon", "label": "Pzt 21", "title": "Pazartesi · Lower Manhattan → SoHo", "route": "Otel → Wall St → Oculus → Mercer Labs → SoHo → Little Italy → Chinatown", "items": [{"title": "Wall Street + Charging Bull", "subtitle": "Financial District başlangıcı", "time": "09:00", "duration": 60, "tag": "Gezinti", "travel": "Metro + kısa yürüyüş", "desc": "Charging Bull, Bowling Green, Wall Street, NYSE ve Federal Hall çevresini tek blok olarak gez.", "maps": "https://www.google.com/maps/search/?api=1&query=Charging%20Bull%20New%20York", "images": ["https://images.unsplash.com/photo-1522083165195-3424ed129620?auto=format&fit=crop&w=1400&q=82"]}, {"title": "The Oculus", "subtitle": "World Trade Center mimarisi", "time": "10:15", "duration": 45, "tag": "Mimari", "travel": "12–15 dk yürüyüş", "desc": "İç mekânı ve ana aksı gör. Buradan Mercer Labs’a geçiş çok kısa.", "maps": "https://www.google.com/maps/search/?api=1&query=Oculus%20World%20Trade%20Center", "images": ["https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=1400&q=82"]}, {"title": "Mercer Labs", "subtitle": "Museum of Art & Technology", "time": "11:00", "duration": 90, "tag": "Deneyim", "travel": "2–4 dk yürüyüş", "desc": "Oculus’un hemen yanında. İçeride 60–90 dakika ayırmak mantıklı.", "maps": "https://www.google.com/maps/search/?api=1&query=Mercer%20Labs%2021%20Dey%20Street%20New%20York", "images": ["https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&w=1400&q=82"]}, {"title": "SoHo", "subtitle": "Mercer → Greene → Prince Street", "time": "13:15", "duration": 60, "tag": "Mahalle", "travel": "Metro veya yürüyüş", "desc": "Mimari, vitrinler ve sokak dokusu. Buradan Little Italy ve Chinatown’a yürüyerek devam et.", "maps": "https://www.google.com/maps/search/?api=1&query=SoHo%20New%20York", "images": ["https://images.unsplash.com/photo-1528988719300-046ff7faf8cb?auto=format&fit=crop&w=1400&q=82"]}, {"title": "Little Italy → Chinatown", "subtitle": "Mulberry → Doyers → Mott", "time": "14:30", "duration": 90, "tag": "Mahalle", "travel": "10–15 dk yürüyüş", "desc": "Little Italy’den Chinatown’a yürüyerek geç. Doyers Street ve Mott Street çevresini gör.", "maps": "https://www.google.com/maps/search/?api=1&query=Chinatown%20New%20York", "images": ["https://images.unsplash.com/photo-1546436836-07a91091f160?auto=format&fit=crop&w=1400&q=82"]}]}, {"id": "tue", "label": "Sal 22", "title": "Salı · Uptown → Broadway", "route": "Otel → AMNH → Central Park → Bryant Park → Wicked → Times Square", "items": [{"title": "American Museum of Natural History", "subtitle": "AMNH", "time": "09:30", "duration": 120, "tag": "Müze", "travel": "Subway + kısa yürüyüş", "desc": "Günün en uzun iç mekân durağı. Tamamını bitirmeye çalışma; seçili galerilerle ilerle.", "maps": "https://www.google.com/maps/search/?api=1&query=American%20Museum%20of%20Natural%20History", "images": ["https://images.unsplash.com/photo-1564399579883-451a5d44ec08?auto=format&fit=crop&w=1400&q=82"]}, {"title": "Central Park", "subtitle": "Müze çıkışı park geçişi", "time": "12:30", "duration": 90, "tag": "Park", "travel": "Direkt yürüyüş", "desc": "AMNH’den çıkınca parkı batıdan doğuya doğru kes. Bow Bridge / Bethesda tarafını enerjiye göre seç.", "maps": "https://www.google.com/maps/search/?api=1&query=Central%20Park%20New%20York", "images": ["https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1400&q=82"]}, {"title": "Bryant Park + NYPL", "subtitle": "Kahve + kısa mimari molası", "time": "15:15", "duration": 60, "tag": "Mola", "travel": "Subway / yürüyüş", "desc": "Bryant Park’ta otur, sonra New York Public Library ana cephesini ve mümkünse ana salonu gör.", "maps": "https://www.google.com/maps/search/?api=1&query=Bryant%20Park%20New%20York", "images": ["https://images.unsplash.com/photo-1541336032412-2048a678540d?auto=format&fit=crop&w=1400&q=82"]}, {"title": "Wicked · Broadway", "subtitle": "Gershwin Theatre", "time": "19:00", "duration": 165, "tag": "Etkinlik", "travel": "15–20 dk yürüyüş", "fixed": true, "desc": "Gösteri için en az 30–45 dakika önce tiyatro çevresinde ol.", "maps": "https://www.google.com/maps/search/?api=1&query=Gershwin%20Theatre%20New%20York", "images": ["https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=1400&q=82"]}, {"title": "Times Square · gece", "subtitle": "Gösteri çıkışında", "time": "21:50", "duration": 45, "tag": "Gece", "travel": "Birkaç dk yürüyüş", "desc": "Broadway çıkışında Times Square’dan geç ve gece atmosferini gör.", "maps": "https://www.google.com/maps/search/?api=1&query=Times%20Square%20New%20York", "images": ["https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=1400&q=82"]}]}, {"id": "wed", "label": "Çar 23", "title": "Çarşamba · Brooklyn şafak → Campbell", "route": "Otel → Brooklyn Bridge → DUMBO → Staten Island Ferry → The Campbell", "items": [{"title": "Brooklyn Bridge", "subtitle": "Kalabalık başlamadan", "time": "06:00", "duration": 60, "tag": "Erken", "travel": "Subway + yürüyüş", "desc": "Köprüyü mümkün olduğunca kalabalık başlamadan geç. Fotoğraf için günün en doğru zamanı.", "maps": "https://www.google.com/maps/search/?api=1&query=Brooklyn%20Bridge%20New%20York", "images": ["https://images.unsplash.com/photo-1517639493569-5666a7b2f494?auto=format&fit=crop&w=1400&q=82"]}, {"title": "DUMBO", "subtitle": "Washington Street + Brooklyn Bridge Park", "time": "07:15", "duration": 90, "tag": "Mahalle", "travel": "5–10 dk yürüyüş", "desc": "Washington Street fotoğraf noktası ve waterfront. Sabah saatleri burada büyük avantaj.", "maps": "https://www.google.com/maps/search/?api=1&query=DUMBO%20Brooklyn%20New%20York", "images": ["https://images.unsplash.com/photo-1522083165195-3424ed129620?auto=format&fit=crop&w=1400&q=82"]}, {"title": "Staten Island Ferry", "subtitle": "Whitehall ↔ St. George", "time": "10:00", "duration": 75, "tag": "Ferry", "travel": "Subway + terminal", "desc": "Ücretsiz feribotla gidiş-dönüş yap. Özgürlük Heykeli ve Lower Manhattan görünümü için.", "maps": "https://www.google.com/maps/search/?api=1&query=Whitehall%20Terminal%20New%20York", "images": ["https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?auto=format&fit=crop&w=1400&q=82"]}, {"title": "Grand Central + The Campbell", "subtitle": "Akşam tek blok", "time": "19:00", "duration": 120, "tag": "Bar", "travel": "Otele yakın yürüyüş", "fixed": true, "desc": "Grand Central’ı The Campbell öncesi gör. Ardından Campbell’da akşamı kapat.", "maps": "https://www.google.com/maps/search/?api=1&query=The%20Campbell%20Grand%20Central%20New%20York", "images": ["https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&w=1400&q=82"]}]}, {"id": "thu", "label": "Per 24", "title": "Perşembe · West Side → House of Yes", "route": "Otel → Hudson Yards → High Line → Pier 57 → House of Yes", "items": [{"title": "Hudson Yards + Vessel", "subtitle": "West Side başlangıcı", "time": "11:00", "duration": 60, "tag": "Mimari", "travel": "7 treni + yürüyüş", "desc": "Vessel çevresi ve Hudson Yards. Buradan High Line yönünde güneye in.", "maps": "https://www.google.com/maps/search/?api=1&query=Vessel%20Hudson%20Yards%20New%20York", "images": ["https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&w=1400&q=82"]}, {"title": "High Line → Pier 57", "subtitle": "Yavaş yürüyüş + Hudson molası", "time": "12:15", "duration": 120, "tag": "Yürüyüş", "travel": "Kesintisiz yürüyüş", "desc": "High Line üzerinde güneye in ve Pier 57’de Hudson manzarasıyla mola ver.", "maps": "https://www.google.com/maps/search/?api=1&query=Pier%2057%20New%20York", "images": ["https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&w=1400&q=82"]}, {"title": "House of Yes", "subtitle": "Günün sonu · Brooklyn", "time": "23:00", "duration": 120, "tag": "Etkinlik", "travel": "Subway + kısa yürüyüş", "fixed": true, "desc": "Perşembe gününün sabit gece durağı. Gündüz planını burada bitecek şekilde gevşek bırak.", "maps": "https://www.google.com/maps/search/?api=1&query=House%20of%20Yes%20Brooklyn%20New%20York", "images": ["https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&fit=crop&w=1400&q=82"]}]}, {"id": "fri", "label": "Cum 25", "title": "Cuma · Kısa sabah → havaalanı", "route": "Otel → Roosevelt Island Tram → Otel → Havaalanı", "items": [{"title": "Roosevelt Island Tram", "subtitle": "Son sabah için tek kısa rota", "time": "09:00", "duration": 90, "tag": "Tram", "travel": "Yürüyüş / subway", "desc": "Son sabah Roosevelt Island Tram’ı yap. Sonra otele dön, check-out ve transfer.", "maps": "https://www.google.com/maps/search/?api=1&query=Roosevelt%20Island%20Tramway%20Manhattan", "images": ["https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=1400&q=82"]}, {"title": "Hilton → Havaalanı", "subtitle": "Check-out + transfer", "time": "15:00", "duration": 60, "tag": "Transfer", "travel": "Havaalanına göre", "fixed": true, "desc": "12:00 check-out sonrası valizleri otelde bırak. 15:00 havaalanı hareketi sabit.", "maps": "https://www.google.com/maps/search/?api=1&query=Hilton%20Garden%20Inn%20New%20York%20Times%20Square%20North", "images": ["https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1400&q=82"]}]}];
+let dayIndex=0,itemIndex=0,photoIndex=0,photoTimer=null;
+const states=JSON.parse(localStorage.getItem('nyc.states')||'{}');
+const notes=JSON.parse(localStorage.getItem('nyc.notes')||'{}');
+const timing=JSON.parse(localStorage.getItem('nyc.timing')||'{}');
+const $=id=>document.getElementById(id);
+const els={days:$('days'),summary:$('summary'),daytitle:$('daytitle'),list:$('list'),detail:$('detail'),hero:$('heroImg'),story:$('story'),dmeta:$('dmeta'),dtitle:$('dtitle'),dsub:$('dsub'),ddesc:$('ddesc'),start:$('startInput'),dur:$('durInput'),route:$('routeLink'),notesPanel:$('notesPanel'),notesList:$('notesList'),noteInput:$('noteInput'),mapPanel:$('mapPanel'),mapFrame:$('mapFrame'),mapSummary:$('mapSummary'),mapWrap:$('mapWrap'),mapFallback:$('mapFallback')};
+const key=(d=dayIndex,i=itemIndex)=>DAYS[d].id+'-'+i;
+const item=()=>DAYS[dayIndex].items[itemIndex];
+function parseTime(v){const m=/^(\d{1,2}):(\d{2})$/.exec(v||'');return m?Number(m[1])*60+Number(m[2]):null}
+function fmt(m){m=(m+1440)%1440;return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')}
+function travelMin(t){let m=/(\d+)[–-](\d+)\s*dk/.exec(t||'');if(m)return Math.round((+m[1]+ +m[2])/2);m=/(\d+)\s*dk/.exec(t||'');if(m)return +m[1];return /metro|subway|treni/i.test(t||'')?25:12}
+function ensureTiming(d,i){const k=key(d,i),it=DAYS[d].items[i];if(!timing[k])timing[k]={start:it.time,duration:it.duration,manual:false};return timing[k]}
+function recalc(d){const arr=DAYS[d].items;for(let i=1;i<arr.length;i++){const prev=ensureTiming(d,i-1),cur=ensureTiming(d,i),it=arr[i];if(it.fixed&&!cur.manual)cur.start=it.time;else if(!cur.manual){const p=parseTime(prev.start);if(p!==null)cur.start=fmt(p+prev.duration+travelMin(it.travel))}}localStorage.setItem('nyc.timing',JSON.stringify(timing))}
+DAYS.forEach((_,i)=>recalc(i));
+function render(){const d=DAYS[dayIndex];els.days.innerHTML='';DAYS.forEach((x,i)=>{const b=document.createElement('button');b.className='daychip'+(i===dayIndex?' active':'');b.textContent=x.label;b.onclick=()=>{dayIndex=i;render()};els.days.appendChild(b)});els.summary.innerHTML='<b>Bugünün rotası:</b> '+d.route;els.daytitle.textContent=d.title;els.list.innerHTML='';d.items.forEach((it,i)=>{const t=ensureTiming(dayIndex,i),st=states[key(dayIndex,i)]||'';const b=document.createElement('button');b.className='route-card';b.type='button';b.dataset.index=i;b.innerHTML=`<div class="imagebox"><img src="${it.images[0]}" alt=""><span class="timechip">${t.start}</span></div><div class="copy"><h3>${it.title}</h3><p>${it.subtitle}</p><div class="meta"><span>◷ ${t.duration<60?t.duration+' dk':(t.duration/60)+' sa'}</span><span>${it.travel}</span></div></div><div class="chev">${st==='done'?'✓':'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>'}</div>`;els.list.appendChild(b)})}
+function openDetail(i){itemIndex=Number(i);photoIndex=0;els.detail.hidden=false;document.body.style.overflow='hidden';syncDetail()}
+function closeDetail(){els.detail.hidden=true;els.notesPanel.hidden=true;els.mapPanel.hidden=true;document.body.style.overflow='';clearTimeout(photoTimer)}
+function syncDetail(){const it=item(),t=ensureTiming(dayIndex,itemIndex),st=states[key()]||'';els.dtitle.textContent=it.title;els.dsub.textContent=it.subtitle;els.ddesc.textContent=it.desc;els.start.value=t.start;els.dur.value=String(t.duration);els.route.href=it.maps;els.dmeta.innerHTML=`<span>${it.tag}</span><span>${t.start}</span><span>${t.duration} dk</span><span>${it.travel}</span>`;$('doneBtn').textContent=st==='done'?'✓ Gidildi':'✓ Gidildi';renderStory();if(!els.notesPanel.hidden)renderNotes()}
+function renderStory(){clearTimeout(photoTimer);const imgs=item().images||[];if(photoIndex>=imgs.length)photoIndex=0;els.hero.src=imgs[photoIndex];els.story.innerHTML='';imgs.forEach((_,i)=>{const s=document.createElement('div');s.className='seg '+(i<photoIndex?'done':i===photoIndex?'active':'');s.innerHTML='<div class="fill"></div>';els.story.appendChild(s)});if(photoIndex<imgs.length-1)photoTimer=setTimeout(()=>{photoIndex++;renderStory()},5000)}
+function nextPhoto(){const imgs=item().images;if(photoIndex<imgs.length-1){photoIndex++;renderStory()}}
+function prevPhoto(){if(photoIndex>0){photoIndex--;renderStory()}}
+function nextStop(){if(itemIndex<DAYS[dayIndex].items.length-1)itemIndex++;else if(dayIndex<DAYS.length-1){dayIndex++;itemIndex=0;render()}photoIndex=0;syncDetail()}
+function prevStop(){if(itemIndex>0)itemIndex--;else if(dayIndex>0){dayIndex--;itemIndex=DAYS[dayIndex].items.length-1;render()}photoIndex=0;syncDetail()}
+function mark(v){const k=key();states[k]=states[k]===v?'':v;localStorage.setItem('nyc.states',JSON.stringify(states));render();syncDetail()}
+function updateTiming(){const t=ensureTiming(dayIndex,itemIndex);t.start=els.start.value;t.duration=Number(els.dur.value);t.manual=true;recalc(dayIndex);localStorage.setItem('nyc.timing',JSON.stringify(timing));render();syncDetail()}
+function noteArr(){const k=key();if(!Array.isArray(notes[k]))notes[k]=[];return notes[k]}
+function saveNotes(){localStorage.setItem('nyc.notes',JSON.stringify(notes))}
+function renderNotes(){els.notesList.innerHTML='';const a=noteArr();if(!a.length)els.notesList.innerHTML='<div style="color:#999;font-size:12px;padding:8px">Henüz not yok.</div>';a.forEach((n,i)=>{const r=document.createElement('div');r.className='note'+(n.checked?' checked':'');r.innerHTML=`<button class="ncheck" type="button">${n.checked?'✓':''}</button><div class="ntxt"></div><button class="ndel" type="button">Sil</button>`;r.querySelector('.ntxt').textContent=n.text;r.querySelector('.ncheck').onclick=()=>{n.checked=!n.checked;saveNotes();renderNotes()};r.querySelector('.ndel').onclick=()=>{a.splice(i,1);saveNotes();renderNotes()};els.notesList.appendChild(r)})}
+function openMap(){
+  els.notesPanel.hidden=true;
+  els.mapPanel.hidden=!els.mapPanel.hidden;
+  if(els.mapPanel.hidden)return;
 
-const $ = (id)=>document.getElementById(id);
-const detailEl=$('detail'), detailImgEl=$('detailImg'), detailTitleEl=$('detailTitle'),
-detailSubEl=$('detailSub'), detailDescEl=$('detailDesc'), detailRouteEl=$('detailRoute'),
-detailMetaEl=$('detailMeta'), startTimeInputEl=$('startTimeInput'), durationInputEl=$('durationInput'),
-recalcInfoEl=$('recalcInfo'), detailDoneEl=$('detailDone'), detailSkipEl=$('detailSkip'),
-notesPanelEl=$('notesPanel'), storybarEl=$('storybar'), noteInputEl=$('noteInput'),
-notesListEl=$('notesList');
-const STORY_MS=5000;
+  const it=item();
+  const next=DAYS[dayIndex].items[itemIndex+1];
+  const origin=encodeURIComponent(it.title+' New York');
+  const destination=encodeURIComponent((next?next.title:it.title)+' New York');
 
-function sKey(){return DAYS[dayIndex].id+'-'+detailIndex}
+  els.mapWrap.classList.remove('loaded');
 
-function parseClock(v){if(!v||!/^\\d{1,2}:\\d{2}$/.test(v))return null;const [h,m]=v.split(':').map(Number);return h*60+m}
-function fmtClock(n){n=((n%1440)+1440)%1440;return String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0')}
-function defaultDuration(it){const d=it.duration||'';if(/2[–-]3/.test(d))return 150;if(/90[–-]120/.test(d))return 105;if(/75[–-]90/.test(d))return 80;if(/60[–-]90/.test(d))return 75;if(/60[–-]75/.test(d))return 65;if(/60/.test(d))return 60;if(/45/.test(d))return 45;if(/35/.test(d))return 40;return 60}
-function isFixedEvent(it){return /wicked|house of yes|campbell/i.test(it.title)||/Etkinlik|Bar/i.test(it.tag)}
-function estimateTravelMinutes(txt){if(!txt)return 10;let m=txt.match(/(\\d+)[–-](\\d+)\\s*dk/);if(m)return Math.round((+m[1]+ +m[2])/2);m=txt.match(/(\\d+)\\s*dk/);if(m)return +m[1];if(/subway|metro|treni/i.test(txt))return 25;return 12}
-function ensureTiming(di,ii){const d=DAYS[di],it=d.items[ii],k=d.id+'-'+ii;if(!timing[k])timing[k]={start:parseClock(it.time)!=null?it.time:null,duration:defaultDuration(it),manualStart:false};return timing[k]}
-function recalcDay(di){const d=DAYS[di];for(let i=0;i<d.items.length;i++){const it=d.items[i],t=ensureTiming(di,i),planned=parseClock(it.time);if(i===0){if(!t.start&&planned!=null)t.start=fmtClock(planned);continue}const prev=ensureTiming(di,i-1);const prevStart=parseClock(prev.start);if(isFixedEvent(it)&&planned!=null&&!t.manualStart){t.start=fmtClock(planned);continue}if(!t.manualStart&&prevStart!=null)t.start=fmtClock(prevStart+prev.duration+estimateTravelMinutes(it.travel))}localStorage.setItem('nyc-timing-v9',JSON.stringify(timing))}
-function timingLabel(di,ii){const t=ensureTiming(di,ii);return t.start||DAYS[di].items[ii].time}
-function durationLabel(mins){if(mins<60)return mins+' dk';const h=Math.floor(mins/60),m=mins%60;return m?`${h} sa ${m} dk`:`${h} saat`}
-function saveTimingFromUI(){const t=ensureTiming(dayIndex,detailIndex);const v=startTimeInputEl.value;if(v){t.start=v;t.manualStart=true}t.duration=Number(durationInputEl.value)||60;recalcDay(dayIndex);syncDetail();render()}
-
-function shortTimeLabel(v){
-  if(!v)return '';
-  if(/^\d{1,2}:\d{2}$/.test(v)) return v.padStart(5,'0');
-  if(/çıkışta|akşam|gece|rezervasyon/i.test(v)) return v;
-  return v;
-}
-function transportMeta(txt){
-  const t=(txt||'').toLowerCase();
-  if(t.includes('tram')) return '🚋 Tram';
-  if(t.includes('ferry')||t.includes('feribot')) return '⛴ Ferry';
-  if(t.includes('subway')||t.includes('metro')||t.includes('treni')) return 'Ⓜ Metro';
-  if(t.includes('yürüy')) return '↗ Yürü';
-  if(t.includes('havaalan')) return '✈ Transfer';
-  return '↗ Rota';
-}
-function travelDurationLabel(txt){
-  if(!txt)return '';
-  const m=txt.match(/(\d+)[–-](\d+)\s*dk/i);
-  if(m)return `${m[1]}–${m[2]} dk`;
-  const s=txt.match(/(\d+)\s*dk/i);
-  if(s)return `${s[1]} dk`;
-  return '';
-}
-
-function render(){
-  const d=DAYS[dayIndex];
-  document.getElementById('daytitle').textContent=d.title;
-  document.getElementById('summary').innerHTML='<b>Bugünün rotası:</b> '+d.route;
-  const days=document.getElementById('days'); days.innerHTML='';
-  DAYS.forEach((x,i)=>{const b=document.createElement('button');b.className='daychip'+(i===dayIndex?' active':'');b.textContent=x.label;b.onclick=()=>{dayIndex=i;closeDetail();render()};days.appendChild(b)});
-  const list=document.getElementById('list'); list.innerHTML='';
-  d.items.forEach((it,i)=>{
-    const st=states[d.id+'-'+i]||'';
-    const card=document.createElement('article'); card.className='route-card '+(st==='done'?'done':st==='skip'?'skipped':''); card.dataset.index=String(i); card.tabIndex=0; card.setAttribute('role','button');
-    card.innerHTML=`<div class="thumbwrap"><img class="thumb" src="${it.img}" alt=""><div class="card-time">${shortTimeLabel(timingLabel(dayIndex,i))}</div></div><div class="route-copy"><h3>${it.title}</h3><p>${it.subtitle}</p><div class="meta"><span class="duration">◷ ${durationLabel(ensureTiming(dayIndex,i).duration)}</span><span class="transport">${transportMeta(it.travel)}${travelDurationLabel(it.travel)?' · '+travelDurationLabel(it.travel):''}</span></div></div><div class="chev">${st==='done'?'✓':'›'}</div>`;
-    list.appendChild(card)
-  });
-}
-function openDetail(i){
-  detailIndex=Number(i);
-  if(!Number.isFinite(detailIndex)) detailIndex=0;
-  syncDetail();
-  detailEl.hidden=false;
-  document.body.style.overflow='hidden';
-}
-function closeDetail(){
-  detailEl.hidden=true;
-  document.body.style.overflow='';
-  notesPanelEl.classList.remove('open');
-  clearTimeout(storyTimer);
-}
-function syncDetail(){
-  const it=DAYS[dayIndex].items[detailIndex],st=states[sKey()]||'',t=ensureTiming(dayIndex,detailIndex);
-  if(!Array.isArray(it.images)||!it.images.length)it.images=[it.img];
-  storyIndex=0;detailTitleEl.textContent=it.title;detailSubEl.textContent=it.subtitle;detailDescEl.textContent=it.desc;detailRouteEl.href=it.maps;
-  detailMetaEl.innerHTML=`<span>${it.tag}</span><span>${timingLabel(dayIndex,detailIndex)}</span><span>${durationLabel(t.duration)}</span><span>${it.travel}</span>`;
-  startTimeInputEl.value=t.start||'';durationInputEl.value=String(t.duration);recalcInfoEl.textContent=isFixedEvent(it)?'Sabit etkinlik: saat korunur; önceki esnek duraklar buna göre planlanır.':'Saat veya kalış süresi değişirse sonraki esnek duraklar otomatik kayar.';
-  detailDoneEl.className='dact'+(st==='done'?' done':'');detailSkipEl.className='dact'+(st==='skip'?' skip':'');if(notesPanelEl.classList.contains('open'))renderNotes();renderStory();
-}
-function mark(v){states[sKey()]=states[sKey()]===v?'':v;localStorage.setItem('nyc-states-v7',JSON.stringify(states));syncDetail();render()}
-
-
-function noteKey(){return sKey()}
-function ensureNoteArray(){
-  const k=noteKey();
-  if(!Array.isArray(notes[k])) notes[k]=[];
-  return notes[k];
-}
-function persistNotes(){localStorage.setItem('nyc-notes-v8',JSON.stringify(notes))}
-function toggleNotes(){
-  const p=document.getElementById('notesPanel');
-  p.classList.toggle('open');
-  if(p.classList.contains('open')){
-    renderNotes();
-    setTimeout(()=>noteInputEl.focus(),80);
+  if(next){
+    // Keyless Google Maps directions embed. More reliable than the previous place-only query.
+    els.mapFrame.src='https://www.google.com/maps?output=embed&saddr='+origin+'&daddr='+destination;
+    els.mapSummary.innerHTML=`<b>${it.title}</b> → <b>${next.title}</b><br>${next.travel}`;
+    els.mapFallback.href='https://www.google.com/maps/dir/?api=1&origin='+origin+'&destination='+destination;
+  }else{
+    els.mapFrame.src='https://www.google.com/maps?q='+origin+'&output=embed';
+    els.mapSummary.textContent='Bu günün son durağı.';
+    els.mapFallback.href=it.maps;
   }
 }
-function renderNotes(){
-  const list=notesListEl; list.innerHTML='';
-  const arr=ensureNoteArray();
-  if(!arr.length){
-    const empty=document.createElement('div');
-    empty.style.cssText='font-size:12px;color:#aaa;padding:10px 6px 14px';
-    empty.textContent='Henüz not yok.';
-    list.appendChild(empty);
-    return;
-  }
-  arr.forEach((n,i)=>{
-    const wrap=document.createElement('div'); wrap.className='note-row-wrap';
-    const del=document.createElement('button'); del.className='note-delete'; del.textContent='Sil';
-    del.onclick=()=>{arr.splice(i,1);persistNotes();renderNotes()};
-    const row=document.createElement('div'); row.className='note-row'+(n.checked?' checked':'');
-    row.innerHTML=`<button class="note-check">${n.checked?'✓':''}</button><div class="note-text"></div>`;
-    row.querySelector('.note-text').textContent=n.text;
-    row.querySelector('.note-check').onclick=(e)=>{e.stopPropagation();n.checked=!n.checked;persistNotes();renderNotes()};
-    row.onclick=()=>{if(row.classList.contains('reveal')) row.classList.remove('reveal')};
-    let x0=null,y0=null;
-    row.addEventListener('touchstart',e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
-    row.addEventListener('touchend',e=>{
-      if(x0===null)return;
-      const dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;
-      if(Math.abs(dx)>35&&Math.abs(dx)>Math.abs(dy)){
-        if(dx<0) row.classList.add('reveal');
-        else row.classList.remove('reveal');
-      }
-      x0=y0=null;
-    },{passive:true});
-    wrap.appendChild(del); wrap.appendChild(row); list.appendChild(wrap);
-  });
-}
-function addNote(){
-  const input=noteInputEl;
-  const text=input.value.trim();
-  if(!text)return;
-  ensureNoteArray().push({text,checked:false});
-  input.value='';
-  persistNotes(); renderNotes();
-  input.focus();
-}
-noteInputEl.addEventListener('keydown',e=>{
-  if(e.key==='Enter'){e.preventDefault();addNote()}
-});
-
-
-function renderStory(){clearTimeout(storyTimer);const it=DAYS[dayIndex].items[detailIndex],imgs=it.images||[it.img];if(storyIndex>=imgs.length)storyIndex=imgs.length-1;detailImgEl.src=imgs[storyIndex];storybarEl.innerHTML='';imgs.forEach((_,i)=>{const s=document.createElement('div');s.className='storyseg '+(i<storyIndex?'done':i===storyIndex?'active':'');s.style.setProperty('--storydur',(STORY_MS/1000)+'s');s.innerHTML='<div class="storyfill"></div>';storybarEl.appendChild(s)});storyTimer=setTimeout(()=>{if(storyIndex<imgs.length-1){storyIndex++;renderStory()}},STORY_MS)}
-function nextStory(){const imgs=DAYS[dayIndex].items[detailIndex].images||[DAYS[dayIndex].items[detailIndex].img];if(storyIndex<imgs.length-1){storyIndex++;renderStory()}}
-function prevStory(){if(storyIndex>0){storyIndex--;renderStory()}}
-function nextDetail(){const d=DAYS[dayIndex];if(detailIndex<d.items.length-1){detailIndex++;syncDetail()}else if(dayIndex<DAYS.length-1){dayIndex++;detailIndex=0;render();syncDetail()}}
-function prevDetail(){if(detailIndex>0){detailIndex--;syncDetail()}else if(dayIndex>0){dayIndex--;detailIndex=DAYS[dayIndex].items.length-1;render();syncDetail()}}
-
-function bindHorizontalSwipe(el,onLeft,onRight){
-  let sx=null,sy=null,active=false;
-  el.addEventListener('pointerdown',e=>{
-    if(e.target.closest('button,a,input,textarea,.notes-panel')) return;
-    sx=e.clientX;sy=e.clientY;active=true;
-  });
-  el.addEventListener('pointerup',e=>{
-    if(!active)return;
-    const dx=e.clientX-sx,dy=e.clientY-sy;
-    if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)){
-      if(dx<0)onLeft(); else onRight();
-    }
-    active=false;sx=sy=null;
-  });
-}
-bindHorizontalSwipe(detailEl,nextDetail,prevDetail);
-bindHorizontalSwipe(document.getElementById('list'),
- ()=>{if(dayIndex<DAYS.length-1){dayIndex++;render()}},
- ()=>{if(dayIndex>0){dayIndex--;render()}}
-);
-
-
-startTimeInputEl.addEventListener('change',saveTimingFromUI);durationInputEl.addEventListener('change',saveTimingFromUI);document.querySelector('.storytap.next').addEventListener('click',e=>{e.stopPropagation();nextStory()});document.querySelector('.storytap.prev').addEventListener('click',e=>{e.stopPropagation();prevStory()});DAYS.forEach((_,di)=>recalcDay(di));
-
-const routeListEl=document.getElementById('list');
-routeListEl.addEventListener('click',e=>{
-  const card=e.target.closest('.route-card');
-  if(!card || !routeListEl.contains(card)) return;
-  openDetail(card.dataset.index);
-});
-routeListEl.addEventListener('keydown',e=>{
-  const card=e.target.closest('.route-card');
-  if(!card) return;
-  if(e.key==='Enter' || e.key===' '){
-    e.preventDefault();
-    openDetail(card.dataset.index);
-  }
-});
-
+els.list.addEventListener('click',e=>{const c=e.target.closest('.route-card');if(c)openDetail(c.dataset.index)});
+$('backBtn').onclick=closeDetail;$('photoNext').onclick=nextPhoto;$('photoPrev').onclick=prevPhoto;$('nextBtn').onclick=nextStop;$('prevBtn').onclick=prevStop;$('doneBtn').onclick=()=>mark('done');$('skipBtn').onclick=()=>mark('skip');els.start.onchange=updateTiming;els.dur.onchange=updateTiming;
+$('noteBtn').onclick=()=>{els.mapPanel.hidden=true;els.notesPanel.hidden=!els.notesPanel.hidden;if(!els.notesPanel.hidden)renderNotes()};$('noteClose').onclick=()=>els.notesPanel.hidden=true;$('mapBtn').onclick=openMap;$('mapClose').onclick=()=>els.mapPanel.hidden=true;els.mapFrame.addEventListener('load',()=>els.mapWrap.classList.add('loaded'));
+$('noteForm').onsubmit=e=>{e.preventDefault();const v=els.noteInput.value.trim();if(!v)return;noteArr().push({text:v,checked:false});els.noteInput.value='';saveNotes();renderNotes()};
+let sx=null,sy=null;els.detail.addEventListener('pointerdown',e=>{if(e.target.closest('button,input,select,a,.panel'))return;sx=e.clientX;sy=e.clientY});els.detail.addEventListener('pointerup',e=>{if(sx===null)return;const dx=e.clientX-sx,dy=e.clientY-sy;if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy))dx<0?nextStop():prevStop();sx=sy=null});
 render();
-
-// v10 detail rebuild
-const V10 = {
-  detail: document.getElementById('detail'),
-  img: document.getElementById('detailImg'),
-  meta: document.getElementById('detailMeta'),
-  title: document.getElementById('detailTitle'),
-  sub: document.getElementById('detailSub'),
-  desc: document.getElementById('detailDesc'),
-  route: document.getElementById('detailRoute'),
-  start: document.getElementById('startTimeInput'),
-  duration: document.getElementById('durationInput'),
-  recalc: document.getElementById('recalcInfo'),
-  done: document.getElementById('detailDone'),
-  skip: document.getElementById('detailSkip'),
-  storybar: document.getElementById('storybar'),
-  notesPanel: document.getElementById('notesPanel'),
-  notesList: document.getElementById('notesList'),
-  noteInput: document.getElementById('noteInput'),
-  noteForm: document.getElementById('noteForm'),
-  mapPanel: document.getElementById('mapPanel'),
-  mapFrame: document.getElementById('mapFrame'),
-  mapSummary: document.getElementById('mapSummary'),
-  mapExternal: document.getElementById('mapExternal'),
-};
-let v10StoryIndex=0, v10StoryTimer=null, v10SwipeX=null, v10SwipeY=null;
-
-function v10Item(){ return DAYS[dayIndex].items[detailIndex]; }
-function v10Key(){ return DAYS[dayIndex].id+'-'+detailIndex; }
-
-function openDetail(i){
-  detailIndex=Number(i);
-  if(!Number.isFinite(detailIndex)) detailIndex=0;
-  V10.detail.hidden=false;
-  document.body.style.overflow='hidden';
-  v10StoryIndex=0;
-  syncDetail();
-}
-function closeDetail(){
-  V10.detail.hidden=true;
-  V10.notesPanel.hidden=true;
-  V10.mapPanel.hidden=true;
-  document.body.style.overflow='';
-  clearTimeout(v10StoryTimer);
-}
-function syncDetail(){
-  const it=v10Item(), st=states[v10Key()]||'', t=ensureTiming(dayIndex,detailIndex);
-  const imgs=(Array.isArray(it.images)&&it.images.length)?it.images:[it.img];
-  if(v10StoryIndex>=imgs.length) v10StoryIndex=imgs.length-1;
-  V10.img.src=imgs[v10StoryIndex];
-  V10.img.alt=it.title;
-  V10.title.textContent=it.title;
-  V10.sub.textContent=it.subtitle||'';
-  V10.desc.textContent=it.desc||'';
-  V10.route.href=it.maps;
-  V10.meta.innerHTML=`<span>${it.tag||'Durak'}</span><span>${timingLabel(dayIndex,detailIndex)}</span><span>${durationLabel(t.duration)}</span><span>${it.travel||''}</span>`;
-  V10.start.value=t.start||'';
-  V10.duration.value=String(t.duration);
-  V10.recalc.textContent=isFixedEvent(it)
-    ? 'Sabit etkinlik · diğer esnek duraklar bu saate göre kayar.'
-    : 'Başlangıç veya kalış değişirse sonraki esnek duraklar otomatik güncellenir.';
-  V10.done.className='main-action'+(st==='done'?' done':'');
-  V10.skip.className='main-action secondary'+(st==='skip'?' skip':'');
-  renderV10Story();
-  if(!V10.notesPanel.hidden) renderNotesV10();
-}
-function mark(v){
-  const k=v10Key();
-  states[k]=states[k]===v?'':v;
-  localStorage.setItem('nyc-states-v7',JSON.stringify(states));
-  syncDetail(); render();
-}
-function saveTimingV10(){
-  const t=ensureTiming(dayIndex,detailIndex);
-  if(V10.start.value){t.start=V10.start.value;t.manualStart=true}
-  t.duration=Number(V10.duration.value)||60;
-  localStorage.setItem('nyc-timing-v9',JSON.stringify(timing));
-  recalcDay(dayIndex); syncDetail(); render();
-}
-function nextDetail(){
-  const d=DAYS[dayIndex];
-  if(detailIndex<d.items.length-1){detailIndex++;v10StoryIndex=0;syncDetail();return}
-  if(dayIndex<DAYS.length-1){dayIndex++;detailIndex=0;v10StoryIndex=0;render();syncDetail()}
-}
-function prevDetail(){
-  if(detailIndex>0){detailIndex--;v10StoryIndex=0;syncDetail();return}
-  if(dayIndex>0){dayIndex--;detailIndex=DAYS[dayIndex].items.length-1;v10StoryIndex=0;render();syncDetail()}
-}
-function renderV10Story(){
-  clearTimeout(v10StoryTimer);
-  const it=v10Item(), imgs=(Array.isArray(it.images)&&it.images.length)?it.images:[it.img];
-  V10.img.src=imgs[v10StoryIndex];
-  V10.storybar.innerHTML='';
-  imgs.forEach((_,i)=>{
-    const seg=document.createElement('div');
-    seg.className='storyseg '+(i<v10StoryIndex?'done':i===v10StoryIndex?'active':'');
-    seg.innerHTML='<div class="storyfill"></div>';
-    V10.storybar.appendChild(seg);
-  });
-  if(v10StoryIndex<imgs.length-1){
-    v10StoryTimer=setTimeout(()=>{v10StoryIndex++;renderV10Story()},5000);
-  }
-}
-function nextStoryV10(){
-  const it=v10Item(), imgs=(Array.isArray(it.images)&&it.images.length)?it.images:[it.img];
-  if(v10StoryIndex<imgs.length-1){v10StoryIndex++;renderV10Story()}
-}
-function prevStoryV10(){if(v10StoryIndex>0){v10StoryIndex--;renderV10Story()}}
-
-function toggleNotesV10(){
-  V10.mapPanel.hidden=true;
-  V10.notesPanel.hidden=!V10.notesPanel.hidden;
-  if(!V10.notesPanel.hidden){renderNotesV10();setTimeout(()=>V10.noteInput.focus(),50)}
-}
-function noteArrayV10(){
-  const k=v10Key();
-  if(!Array.isArray(notes[k])) notes[k]=[];
-  return notes[k];
-}
-function persistNotesV10(){localStorage.setItem('nyc-notes-v8',JSON.stringify(notes))}
-function renderNotesV10(){
-  const arr=noteArrayV10(); V10.notesList.innerHTML='';
-  if(!arr.length){
-    const e=document.createElement('div');e.style.cssText='padding:10px 6px 14px;color:#999;font-size:12px';e.textContent='Henüz not yok.';V10.notesList.appendChild(e);return;
-  }
-  arr.forEach((n,i)=>{
-    const wrap=document.createElement('div');wrap.className='note-row-wrap';
-    const del=document.createElement('button');del.type='button';del.className='note-delete';del.textContent='Sil';
-    del.addEventListener('click',()=>{arr.splice(i,1);persistNotesV10();renderNotesV10()});
-    const row=document.createElement('div');row.className='note-row'+(n.checked?' checked':'');
-    const check=document.createElement('button');check.type='button';check.className='note-check';check.textContent=n.checked?'✓':'';
-    const text=document.createElement('div');text.className='note-text';text.textContent=n.text;
-    check.addEventListener('click',()=>{n.checked=!n.checked;persistNotesV10();renderNotesV10()});
-    let sx=null,sy=null;
-    row.addEventListener('pointerdown',e=>{sx=e.clientX;sy=e.clientY});
-    row.addEventListener('pointerup',e=>{
-      if(sx===null)return;const dx=e.clientX-sx,dy=e.clientY-sy;
-      if(Math.abs(dx)>30&&Math.abs(dx)>Math.abs(dy)){if(dx<0)row.classList.add('reveal');else row.classList.remove('reveal')}
-      sx=sy=null;
-    });
-    row.append(check,text);wrap.append(del,row);V10.notesList.appendChild(wrap);
-  });
-}
-function addNoteV10(){
-  const text=V10.noteInput.value.trim();if(!text)return;
-  noteArrayV10().push({text,checked:false});V10.noteInput.value='';persistNotesV10();renderNotesV10();
-}
-function toggleMapV10(){
-  V10.notesPanel.hidden=true;
-  V10.mapPanel.hidden=!V10.mapPanel.hidden;
-  if(V10.mapPanel.hidden)return;
-  const it=v10Item(), d=DAYS[dayIndex], next=d.items[detailIndex+1];
-  const q=encodeURIComponent(next?next.title+' New York':it.title+' New York');
-  V10.mapFrame.src='https://www.google.com/maps?q='+q+'&output=embed';
-  V10.mapSummary.innerHTML=next
-    ? `<b>${it.title}</b> → <b>${next.title}</b><br>${next.travel||'Sonraki durağa geçiş'}`
-    : 'Bu, günün son durağı.';
-  V10.mapExternal.href=next?next.maps:it.maps;
-}
-
-document.getElementById('closeDetailBtn').addEventListener('click',closeDetail);
-document.getElementById('noteToggle').addEventListener('click',toggleNotesV10);
-document.getElementById('mapToggle').addEventListener('click',toggleMapV10);
-document.getElementById('notesCloseBtn').addEventListener('click',()=>V10.notesPanel.hidden=true);
-document.getElementById('mapCloseBtn').addEventListener('click',()=>V10.mapPanel.hidden=true);
-document.getElementById('prevStopBtn').addEventListener('click',prevDetail);
-document.getElementById('nextStopBtn').addEventListener('click',nextDetail);
-document.getElementById('detailDone').addEventListener('click',()=>mark('done'));
-document.getElementById('detailSkip').addEventListener('click',()=>mark('skip'));
-document.querySelector('.storytap-left').addEventListener('click',e=>{e.stopPropagation();prevStoryV10()});
-document.querySelector('.storytap-right').addEventListener('click',e=>{e.stopPropagation();nextStoryV10()});
-V10.start.addEventListener('change',saveTimingV10);
-V10.duration.addEventListener('change',saveTimingV10);
-V10.noteForm.addEventListener('submit',e=>{e.preventDefault();addNoteV10()});
-
-V10.detail.addEventListener('pointerdown',e=>{
-  if(e.target.closest('button,a,input,select,.floating-panel'))return;
-  v10SwipeX=e.clientX;v10SwipeY=e.clientY;
-});
-V10.detail.addEventListener('pointerup',e=>{
-  if(v10SwipeX===null)return;
-  const dx=e.clientX-v10SwipeX,dy=e.clientY-v10SwipeY;
-  if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)){dx<0?nextDetail():prevDetail()}
-  v10SwipeX=v10SwipeY=null;
-});
-
-</script>
-</body>
-</html>
+</script></body></html>
