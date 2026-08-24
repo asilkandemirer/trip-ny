@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html lang="tr"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/><title>NYC Route Plan v3 · Hilton Times Square North</title>
+<style>
+:root{--bg:#f4f3ef;--card:#fff;--text:#151515;--muted:#6c6b67;--line:#dedbd4;--accent:#ff5d1d;--dark:#121212;--soft:#fff1e8;--blue:#eef5ff;--green:#eef8ef;--yellow:#fff7df}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;color:var(--text)}.app{max-width:780px;margin:auto;padding:18px 14px 90px}h1{font-size:38px;line-height:1.02;letter-spacing:-.045em;margin:8px 0}.intro{color:var(--muted);line-height:1.5}.warning{background:#fff4df;border:1px solid #edd6a8;border-radius:16px;padding:13px;margin:14px 0;font-size:13px;line-height:1.45}.overview{display:grid;gap:8px;margin:18px 0}.daycard{text-align:left;border:1px solid var(--line);background:var(--card);border-radius:18px;padding:14px;display:grid;gap:5px;cursor:pointer}.daycard span{font-size:12px;font-weight:800;color:var(--accent)}.daycard b{font-size:17px}.daycard small{color:var(--muted)}.daycard em{font-size:12px;color:#333;font-style:normal;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tabs{display:flex;gap:7px;overflow:auto;position:sticky;top:0;z-index:20;padding:10px 0;background:linear-gradient(var(--bg) 80%,transparent)}.tab{border:1px solid var(--line);background:white;padding:9px 12px;border-radius:999px;font-weight:800;white-space:nowrap}.tab.active{background:#111;color:white;border-color:#111}.day{display:none}.day.active{display:block}.dayhero{background:var(--dark);color:white;border-radius:24px;padding:20px;margin:8px 0 14px}.eyebrow{color:#ff9a6c;font-weight:900;font-size:12px;letter-spacing:.08em;text-transform:uppercase}.dayhero h2{font-size:28px;line-height:1.08;letter-spacing:-.03em;margin:8px 0}.metrics{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}.metrics span{border:1px solid #414141;border-radius:99px;padding:6px 9px;font-size:12px;color:#ddd}.dayhero p{font-size:13px;line-height:1.5;color:#ddd}.drop{color:#ffcfb8!important}.alert{background:#3a261a;border:1px solid #7d4d2d;border-radius:12px;padding:10px;color:#ffd6c0;font-size:12px;line-height:1.45}.progressrow{display:flex;justify-content:space-between;font-size:12px;font-weight:800;margin:12px 2px 6px}.progress{height:8px;background:#e1ded7;border-radius:99px;overflow:hidden}.bar{height:100%;width:0;background:var(--accent);transition:.2s}.stop{display:grid;grid-template-columns:34px 60px 1fr;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:13px;margin:10px 0}.stop.done{opacity:.5}.check{width:28px;height:28px;border:2px solid #bbb7af;background:white;border-radius:9px;margin-top:2px;cursor:pointer;position:relative}.done .check{background:#111;border-color:#111}.done .check:after{content:'✓';color:white;position:absolute;inset:0;display:grid;place-items:center;font-weight:900}.timeline{text-align:right;position:relative}.time{font-size:12px;font-weight:900;color:var(--accent);padding-top:4px}.line{position:absolute;width:1px;background:#ddd;right:-6px;top:30px;bottom:-24px}.stop:last-child .line{display:none}.topline{display:flex;justify-content:space-between;gap:8px;align-items:center}.badge{font-size:9px;font-weight:900;border-radius:99px;background:#f0eee8;padding:4px 7px}.dur{font-size:11px;color:var(--muted);font-weight:700}h3{font-size:17px;line-height:1.2;margin:6px 0}.body p{font-size:13px;line-height:1.45;margin:6px 0;color:#333}.move{margin-top:9px;font-size:12px;line-height:1.4;background:#f7f6f2;border-radius:10px;padding:8px}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.btn,.routebtn{text-decoration:none;font-size:11px;font-weight:900;border-radius:9px;padding:8px 9px;background:#efede7;color:#111}.btn.primary{background:#111;color:#fff}.event{border-color:#ffb494;background:#fff9f5}.meal{background:#fffdf7}.rest{background:#f9fbff}.transit{background:#f8f8f8}.optional{border-style:dashed}.mapsecondary{margin:16px 0;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;font-size:12px;line-height:1.5;display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap}.routebtn{background:#111;color:white}.sources{margin-top:24px;font-size:11px;color:var(--muted);line-height:1.5}@media(max-width:520px){.app{padding:12px 10px 70px}h1{font-size:34px}.stop{grid-template-columns:30px 48px 1fr;gap:7px;padding:11px}.dayhero h2{font-size:25px}}
+
+.hotelbase{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;margin:14px 0;display:flex;justify-content:space-between;gap:14px;align-items:center}.hotelbase span{font-size:10px;font-weight:900;color:var(--accent);letter-spacing:.08em}.hotelbase h2{font-size:18px;margin:5px 0}.hotelbase p{font-size:13px;margin:0 0 5px}.hotelbase small{color:var(--muted);line-height:1.4}.hotelactions{flex:0 0 auto}.hotel{border-color:#bfc9ff;background:#f7f8ff}@media(max-width:520px){.hotelbase{align-items:flex-start;flex-direction:column}}</style></head><body><div class="app"><div class="eyebrow">New York · 20-25 Eylül 2026</div><h1>Otel bazlı NYC checklist.</h1><p class="intro">Her gün <b>Hilton Garden Inn New York Times Square North</b> baz alınarak başlıyor ve gerektiğinde otele dönüyor. Saat, gezi süresi, yürüyüş/metro bacağı, planlı mola ve Google Maps yönlendirmesi aynı checklist içinde.</p><div class="hotelbase"><div><span>ANA ÜS · OTEL</span><h2>Hilton Garden Inn New York Times Square North</h2><p>30 W 46th St, New York, NY 10036</p><small>5th–6th Avenue arasında. Times Square / Rockefeller / Bryant Park / Grand Central yürüyüş mesafesinde.</small></div><div class="hotelactions"><a class="btn primary" href="https://www.google.com/maps/search/?api=1&amp;query=30%20W%2046th%20St%2C%20New%20York%2C%20NY%2010036" target="_blank">Oteli haritada aç</a></div></div>
+<div class="warning"><b>Otel doğrulandı:</b> 30 W 46th St. Hilton’un resmi bilgisine göre check-in 15:00, check-out 12:00; havaalanı shuttle hizmeti yok. Metro süreleri planlama amaçlıdır, seyahat gününde MTA servis değişikliklerini kontrol edin.</div>
+<div class="overview"><button class="daycard" onclick="showDay(0)"><span>20 Eylül Pazar</span><b>Rahat başlangıç · Rockefeller + 5th Ave + Times Square</b><small>15:30 - 20:15 · ~2,5-3 km · sadece yürüyüş</small><em>Hilton → Rockefeller → 5th Ave → Times Square → akşam yemeği → Hilton</em></button><button class="daycard" onclick="showDay(1)"><span>21 Eylül Pazartesi</span><b>Central Park + AMNH + NYPL/Bryant Park + Winnie’s</b><small>08:15 - 22:15+ · ~6-7 km</small><em>Hilton → Central Park → AMNH → NYPL/Bryant Park → Hilton mola → Winnie’s</em></button><button class="daycard" onclick="showDay(2)"><span>22 Eylül Salı</span><b>Financial District + Ferry + Brooklyn Bridge + DUMBO + Wicked</b><small>07:20 - 22:00 · ~7 km</small><em>Hilton → Grand Central/4-5 → Financial District → DUMBO → Wicked → Hilton</em></button><button class="daycard" onclick="showDay(3)"><span>23 Eylül Çarşamba</span><b>SoHo + Little Italy + Chinatown + Williamsburg + House of Yes</b><small>08:55 - gece · ~6-7 km</small><em>Hilton → SoHo → Chinatown → Williamsburg → House of Yes → Hilton</em></button><button class="daycard" onclick="showDay(4)"><span>24 Eylül Perşembe</span><b>Roosevelt Island Tram + Midtown East + Grand Central + The Campbell</b><small>10:30 - gece · ~5-6 km</small><em>Hilton → Roosevelt Tram → Grand Central → Hilton mola → The Campbell</em></button><button class="daycard" onclick="showDay(5)"><span>25 Eylül Cuma</span><b>Tampon sabah + 15:00 havaalanı çıkışı</b><small>09:00 - 15:00 · Düşük</small><em>Hilton çevresi → check-out 12:00 → öğle → 15:00 transfer</em></button></div><div class="tabs"><button class="tab" id="tab-0" onclick="showDay(0)">20 Eylül</button><button class="tab" id="tab-1" onclick="showDay(1)">21 Eylül</button><button class="tab" id="tab-2" onclick="showDay(2)">22 Eylül</button><button class="tab" id="tab-3" onclick="showDay(3)">23 Eylül</button><button class="tab" id="tab-4" onclick="showDay(4)">24 Eylül</button><button class="tab" id="tab-5" onclick="showDay(5)">25 Eylül</button></div><section class="day" id="day-0">
+<div class="dayhero"><div class="eyebrow">20 Eylül Pazar</div><h2>Rahat başlangıç · Otelin çevresinde New York’a merhaba</h2><div class="metrics"><span>15:30 - 20:15</span><span>~2,5-3 km yürüyüş</span><span>Çok rahat</span></div>
+<p><b>Neden bu sıra?</b> Uçuş gününde metro yok, uzun transfer yok, “bir şeyleri yetiştirme” baskısı yok. Otelden en fazla yaklaşık 15-20 dakikalık yürüyüş bandında kalıyoruz. Yine de Rockefeller, 5th Avenue ve Times Square sayesinde ilk akşam gerçekten New York’ta olduğunuzu hissediyorsunuz.</p>
+<p class="drop"><b>Yorulursa:</b> 5th Avenue / ikonik çanta bölümünü kısaltıp doğrudan Times Square’a geçin. Ana planın hiçbir parçası sonraki günlerde tekrar edilmiyor.</p>
+<p class="flow"><b>Akış:</b> Hilton → Rockefeller bloğu → 5th Avenue → Times Square → yemek → Hilton</p></div>
+<div class="progressrow"><span>Gün ilerlemesi</span><span id="count-0">0/6</span></div><div class="progress"><div class="bar" id="bar-0"></div></div>
+<div class="stops">
+<article class="stop hotel" data-key="0-0">
+<button aria-label="tamamla" class="check" onclick="toggle('0-0')"></button>
+<div class="timeline"><div class="time">15:30</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">OTEL</span><span class="dur">10 dk yürüyüş</span></div>
+<h3>Hilton’dan sakin çıkış</h3>
+<p>Valizleri bırakın, su alın ve acele etmeden çıkın. İlk hedef birkaç blok ötede; toplu taşıma kullanmıyoruz.</p>
+<div class="move"><b>Sonraki adım:</b> Rockefeller Center’a yaklaşık 5-7 dk</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=30%20W%2046th%20St%2C%20New%20York%2C%20NY%2010036" target="_blank">Oteli aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=30%20W%2046th%20St%2C%20New%20York%2C%20NY%2010036&amp;destination=45%20Rockefeller%20Plaza%2C%20New%20York%2C%20NY%2010111&amp;travelmode=walking" target="_blank">Rockefeller’a yürü</a></div></div></article>
+<article class="stop" data-key="0-1">
+<button aria-label="tamamla" class="check" onclick="toggle('0-1')"></button>
+<div class="timeline"><div class="time">15:40</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">KEYİF</span><span class="dur">60-70 dk</span></div>
+<h3>Rockefeller Center bloğu · FAO Schwarz + LEGO</h3>
+<p>Burayı üç ayrı “görev” gibi değil tek bir keyifli alan gibi düşünün. Plaza ve Channel Gardens’da dolaşın; enerji varsa FAO Schwarz ve LEGO Store’a girin. Kahve almak veya oturmak için zaman bırakıldı.</p>
+<div class="move"><b>Sonraki adım:</b> 5th Avenue üzerinden kuzeye, 57th Street’e 10-12 dk</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=45%20Rockefeller%20Plaza%2C%20New%20York%2C%20NY%2010111" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=45%20Rockefeller%20Plaza%2C%20New%20York%2C%20NY%2010111&amp;destination=6%20E%2057th%20St%2C%20New%20York%2C%20NY%2010022&amp;travelmode=walking" target="_blank">5th Avenue rotası</a></div></div></article>
+<article class="stop" data-key="0-2">
+<button aria-label="tamamla" class="check" onclick="toggle('0-2')"></button>
+<div class="timeline"><div class="time">17:00</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">GEZİNTİ</span><span class="dur">35-45 dk</span></div>
+<h3>5th Avenue yürüyüşü + ikonik çanta</h3>
+<p>Mağaza mağaza gezmek yerine cadde atmosferini yaşayın. Listedeki “5th Avenue ikonik çanta” noktasını görün, birkaç fotoğraf çekin ve devam edin.</p>
+<div class="move"><b>Sonraki adım:</b> Times Square’a yaklaşık 15-18 dk rahat yürüyüş</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=6%20E%2057th%20St%2C%20New%20York%2C%20NY%2010022" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=6%20E%2057th%20St%2C%20New%20York%2C%20NY%2010022&amp;destination=Times%20Square%2C%20New%20York%2C%20NY&amp;travelmode=walking" target="_blank">Times Square’a yürü</a></div></div></article>
+<article class="stop rest" data-key="0-3">
+<button aria-label="tamamla" class="check" onclick="toggle('0-3')"></button>
+<div class="timeline"><div class="time">17:55</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">NEW YORK ANI</span><span class="dur">40-50 dk</span></div>
+<h3>Times Square + M&amp;M’s</h3>
+<p>İlk günün “New York’a geldik” anı burada. Meydanda oturun, ekranları izleyin, fotoğraf çekin. M&amp;M’s mağazasını da bu blokta bitirin; böylece Broadway günü buraya tekrar uğramak gerekmiyor.</p>
+<div class="move"><b>Sonraki adım:</b> 46th Street çevresinde akşam yemeğine 5-10 dk</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=Times%20Square%2C%20New%20York%2C%20NY" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=Times%20Square%2C%20New%20York%2C%20NY&amp;destination=30%20W%2046th%20St%2C%20New%20York%2C%20NY%2010036&amp;travelmode=walking" target="_blank">Otel yönüne dön</a></div></div></article>
+
+
+</div>
+<div class="mapsecondary"><div><b>İlk gün kuralı:</b> Metro yok. Bütün rota otelin yakın çevresinde ve yürüyerek.</div><a class="routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=30%20W%2046th%20St%2C%20New%20York%2C%20NY%2010036&amp;destination=30%20W%2046th%20St%2C%20New%20York%2C%20NY%2010036&amp;travelmode=walking&amp;waypoints=45%20Rockefeller%20Plaza%2C%20New%20York%2C%20NY%2010111%7C6%20E%2057th%20St%2C%20New%20York%2C%20NY%2010022%7CTimes%20Square%2C%20New%20York%2C%20NY" target="_blank">İlk gün yürüyüş rotasını aç ↗</a></div>
+</section><section class="day" id="day-1">
+<div class="dayhero"><div class="eyebrow">21 Eylül Pazartesi</div><h2>Central Park + AMNH + NYPL/Bryant Park + Winnie’s</h2><div class="metrics"><span>08:15 - 22:15+</span><span>~6-7 km yürüyüş</span><span>Orta</span></div>
+<p><b>Neden bu sıra?</b> Central Park’ı doğudan batıya tek seferde geçip müzede bitiriyoruz. Sonra subway ile 59th St’e dönüp 5th Avenue boyunca güneye iniyoruz; gün Winnie’s yakınında bitiyor.</p><p class="drop"><b>Yorulursa:</b> Zaman daralırsa FAO veya LEGO’dan birini 15 dk’ya indir; NYPL’yi 17:30’dan önce bitir.</p><p class="flow"><b>Otel bazlı akış:</b> Hilton → Central Park → AMNH → 5th Ave → Hilton → Winnie’s → Hilton</p></div>
+<div class="progressrow"><span>Gün ilerlemesi</span><span id="count-1">0/15</span></div><div class="progress"><div class="bar" id="bar-1"></div></div>
+<div class="stops"><article class="stop hotel" data-key="1-hotel-start">
+<button aria-label="tamamla" class="check" onclick="toggle('1-hotel-start')"></button>
+<div class="timeline"><div class="time">08:15</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">OTEL</span><span class="dur">25-30 dk</span></div>
+<h3>Otelden Central Park’a yürü</h3><p>Otel 46th Street’te; 5th Avenue boyunca kuzeye yürüyerek parkın East 72nd Street girişine çık. Sabah için ekstra metro değişimi yerine düz yürüyüş daha temiz.</p><div class="move"><b>Sonraki adım:</b> 08:45 park girişi</div><div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=30%20W%2046th%20St%2C%20New%20York%2C%20NY%2010036" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=30%20W%2046th%20St%2C%20New%20York%2C%20NY%2010036&amp;destination=East%2072nd%20Street%20%26%205th%20Avenue%2C%20New%20York%2C%20NY&amp;travelmode=walking" target="_blank">Sonraki durağa git</a></div></div></article><article class="stop" data-key="1-0">
+<button aria-label="tamamla" class="check" onclick="toggle('1-0')"></button>
+<div class="timeline"><div class="time">08:45</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">GEZİ</span><span class="dur">10 dk</span></div>
+<h3>Central Park, East 72nd St girişi</h3>
+<p>Parkı kalabalık artmadan başlat.</p><div class="move"><b>Sonraki adım:</b> Bethesda Terrace’a ~10-12 dk yürü</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=East%2072nd%20Street%20%26%205th%20Avenue%2C%20New%20York%2C%20NY" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=East%2072nd%20Street%20%26%205th%20Avenue%2C%20New%20York%2C%20NY&amp;destination=Bethesda%20Terrace%2C%20Central%20Park%2C%20New%20York%2C%20NY&amp;travelmode=walking" target="_blank">Sonraki durağa git</a></div></div></article><article class="stop optional" data-key="1-1">
+<button aria-label="tamamla" class="check" onclick="toggle('1-1')"></button>
+<div class="timeline"><div class="time">09:05</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">EK ÖNERİ</span><span class="dur">15 dk</span></div>
+<h3>Bethesda Terrace &amp; Fountain</h3>
+<p>Ek öneri; parkın en iyi kısa durağı.</p><div class="move"><b>Sonraki adım:</b> Bow Bridge’e 4-5 dk yürü</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=Bethesda%20Terrace%2C%20Central%20Park%2C%20New%20York%2C%20NY" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=Bethesda%20Terrace%2C%20Central%20Park%2C%20New%20York%2C%20NY&amp;destination=Bow%20Bridge%2C%20Central%20Park%2C%20New%20York%2C%20NY&amp;travelmode=walking" target="_blank">Sonraki durağa git</a></div></div></article><article class="stop optional" data-key="1-2">
+<button aria-label="tamamla" class="check" onclick="toggle('1-2')"></button>
+<div class="timeline"><div class="time">09:25</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">EK ÖNERİ</span><span class="dur">15 dk</span></div>
+<h3>Bow Bridge</h3>
+<p>Fotoğraf + kısa mola.</p><div class="move"><b>Sonraki adım:</b> AMNH’ye ~12-15 dk yürü</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=Bow%20Bridge%2C%20Central%20Park%2C%20New%20York%2C%20NY" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=Bow%20Bridge%2C%20Central%20Park%2C%20New%20York%2C%20NY&amp;destination=200%20Central%20Park%20W%2C%20New%20York%2C%20NY%2010024&amp;travelmode=walking" target="_blank">Sonraki durağa git</a></div></div></article><article class="stop" data-key="1-3">
+<button aria-label="tamamla" class="check" onclick="toggle('1-3')"></button>
+<div class="timeline"><div class="time">10:00</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">GEZİ</span><span class="dur">2 sa 45 dk</span></div>
+<h3>American Museum of Natural History</h3>
+<p>Müze 10:00 açılıyor. Tüm müzeyi bitirmeye çalışma; 2,5-3 saat yeterli.</p><div class="move"><b>Sonraki adım:</b> Öğle yemeği için Upper West Side’a 5-10 dk</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=200%20Central%20Park%20W%2C%20New%20York%2C%20NY%2010024" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=200%20Central%20Park%20W%2C%20New%20York%2C%20NY%2010024&amp;destination=Upper%20West%20Side%2C%20New%20York%2C%20NY&amp;travelmode=walking" target="_blank">Sonraki durağa git</a></div></div></article><article class="stop" data-key="1-8">
+<button aria-label="tamamla" class="check" onclick="toggle('1-8')"></button>
+<div class="timeline"><div class="time">15:15</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">GEZİ</span><span class="dur">45 dk</span></div>
+<h3>New York Public Library</h3>
+<p>Ana bina Pazartesi 18:00’e kadar; bu yüzden jazz’dan çok önce burada.</p><div class="move"><b>Sonraki adım:</b> Bryant Park hemen arkada</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=476%205th%20Ave%2C%20New%20York%2C%20NY%2010018" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=476%205th%20Ave%2C%20New%20York%2C%20NY%2010018&amp;destination=Bryant%20Park%2C%20New%20York%2C%20NY&amp;travelmode=walking" target="_blank">Sonraki durağa git</a></div></div></article><article class="stop rest" data-key="1-9">
+<button aria-label="tamamla" class="check" onclick="toggle('1-9')"></button>
+<div class="timeline"><div class="time">16:05</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">DİNLENME</span><span class="dur">40 dk</span></div>
+<h3>Bryant Park kahve / ayak dinlendirme</h3>
+<p>Planlı dinlenme. Bu molayı atlama.</p><div class="move"><b>Sonraki adım:</b> Otele 6-8 dk yürü; duş / kıyafet / ayak dinlendirme</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=Bryant%20Park%2C%20New%20York%2C%20NY" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=Bryant%20Park%2C%20New%20York%2C%20NY&amp;destination=30%20W%2046th%20St%2C%20New%20York%2C%20NY%2010036&amp;travelmode=walking" target="_blank">Otele dön</a></div></div></article><article class="stop event" data-key="1-11">
+<button aria-label="tamamla" class="check" onclick="toggle('1-11')"></button>
+<div class="timeline"><div class="time">19:15</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">SABİT</span><span class="dur">2-3 saat</span></div>
+<h3>Winnie’s Jazz Club</h3>
+<p>Resmi sitede live music 19:30 civarı. Rezervasyondaki saati esas alın.</p><div class="move"><b>Sonraki adım:</b> Jazz sonrası otele yaklaşık 9-10 dk yürü</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=63%20W%2038th%20St%2C%20New%20York%2C%20NY%2010018" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=63%20W%2038th%20St%2C%20New%20York%2C%20NY%2010018&amp;destination=30%20W%2046th%20St%2C%20New%20York%2C%20NY%2010036&amp;travelmode=walking" target="_blank">Otele dön</a></div></div></article><article class="stop hotel" data-key="1-hotel-return">
+<button aria-label="tamamla" class="check" onclick="toggle('1-hotel-return')"></button>
+<div class="timeline"><div class="time">Gece</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">OTEL</span><span class="dur">9-10 dk</span></div>
+<h3>Winnie’s → Hilton</h3><p>Kulüp otelin yalnızca birkaç blok güneyinde. Günün sonunda metroya gerek yok.</p><div class="move"><b>Sonraki adım:</b> Günü otelde bitir</div><div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=63%20W%2038th%20St%2C%20New%20York%2C%20NY%2010018" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=63%20W%2038th%20St%2C%20New%20York%2C%20NY%2010018&amp;destination=30%20W%2046th%20St%2C%20New%20York%2C%20NY%2010036&amp;travelmode=walking" target="_blank">Sonraki durağa git</a></div></div></article></div>
+<div class="mapsecondary"><div><b>Harita ikincil.</b> Önce yukarıdaki sıra takip ediliyor; harita sadece navigasyon için açılıyor.</div><a class="routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=East%2072nd%20Street%20%26%205th%20Avenue%2C%20New%20York%2C%20NY&amp;destination=63%20W%2038th%20St%2C%20New%20York%2C%20NY%2010018&amp;travelmode=walking&amp;waypoints=Bethesda%20Terrace%2C%20Central%20Park%2C%20New%20York%2C%20NY%7CBow%20Bridge%2C%20Central%20Park%2C%20New%20York%2C%20NY%7C200%20Central%20Park%20W%2C%20New%20York%2C%20NY%2010024%7CUpper%20West%20Side%2C%20New%20York%2C%20NY%7C6%20E%2057th%20St%2C%20New%20York%2C%20NY%2010022%7C30%20Rockefeller%20Plaza%2C%20New%20York%2C%20NY%2010111%7C636%205th%20Ave%2C%20New%20York%2C%20NY%2010020%7C476%205th%20Ave%2C%20New%20York%2C%20NY%2010018" target="_blank">Günün yürüyüş rotasını Google Maps’te aç ↗</a></div>
+</section><section class="day" id="day-2">
+<div class="dayhero"><div class="eyebrow">22 Eylül Salı</div><h2>Financial District + Ferry + Brooklyn Bridge + DUMBO + Wicked</h2><div class="metrics"><span>07:20 - 22:00</span><span>~7 km yürüyüş</span><span>Yoğun</span></div>
+<p><b>Neden bu sıra?</b> Downtown’da güne erken başlayıp kalabalık fotoğraf noktalarını önce bitiriyoruz. Ferry dönüşünde Oculus → Brooklyn Bridge → DUMBO tek yön. Broadway için yalnızca bir uzun subway sıçraması yapılıyor.</p><p class="drop"><b>Yorulursa:</b> Gecikme olursa 9/11 dış alanını kısalt; Wicked giriş tamponuna dokunma.</p><p class="flow"><b>Otel bazlı akış:</b> Hilton → Financial District → DUMBO → Broadway → Hilton</p></div>
+<div class="progressrow"><span>Gün ilerlemesi</span><span id="count-2">0/18</span></div><div class="progress"><div class="bar" id="bar-2"></div></div>
+<div class="stops"><article class="stop" data-key="2-0">
+<button aria-label="tamamla" class="check" onclick="toggle('2-0')"></button>
+<div class="timeline"><div class="time">08:00</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">GEZİ</span><span class="dur">20 dk</span></div>
+<h3>Charging Bull + Bowling Green</h3>
+<p>Kalabalık oluşmadan fotoğraf.</p><div class="move"><b>Sonraki adım:</b> Wall Street’e 5-7 dk yürü</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=Bowling%20Green%2C%20New%20York%2C%20NY%2010004" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=Bowling%20Green%2C%20New%20York%2C%20NY%2010004&amp;destination=Wall%20Street%2C%20New%20York%2C%20NY%2010005&amp;travelmode=walking" target="_blank">Sonraki durağa git</a></div></div></article><article class="stop" data-key="2-1">
+<button aria-label="tamamla" class="check" onclick="toggle('2-1')"></button>
+<div class="timeline"><div class="time">08:25</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">GEZİ</span><span class="dur">30 dk</span></div>
+<h3>Wall Street / NYSE / Federal Hall</h3>
+<p>Listedeki Wall Street; dışarıdan görmek için 30 dk yeterli.</p><div class="move"><b>Sonraki adım:</b> Whitehall Terminal’a 10-12 dk yürü</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=Wall%20Street%2C%20New%20York%2C%20NY%2010005" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=Wall%20Street%2C%20New%20York%2C%20NY%2010005&amp;destination=4%20Whitehall%20St%2C%20New%20York%2C%20NY%2010004&amp;travelmode=walking" target="_blank">Sonraki durağa git</a></div></div></article><article class="stop rest" data-key="2-2">
+<button aria-label="tamamla" class="check" onclick="toggle('2-2')"></button>
+<div class="timeline"><div class="time">09:05</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">DİNLENME</span><span class="dur">20 dk</span></div>
+<h3>Whitehall Terminal, biniş tamponu</h3>
+<p>Tuvalet + güvenlik / biniş tamponu.</p><div class="move"><b>Sonraki adım:</b> 09:30 ferry hedefi</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=4%20Whitehall%20St%2C%20New%20York%2C%20NY%2010004" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=4%20Whitehall%20St%2C%20New%20York%2C%20NY%2010004&amp;destination=Whitehall%20Terminal%2C%20New%20York%2C%20NY&amp;travelmode=walking" target="_blank">Sonraki durağa git</a></div></div></article><article class="stop transit" data-key="2-3">
+<button aria-label="tamamla" class="check" onclick="toggle('2-3')"></button>
+<div class="timeline"><div class="time">09:30</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">ULAŞIM</span><span class="dur">25 dk</span></div>
+<h3>Staten Island Ferry, gidiş</h3>
+<p>Ücretsiz. Tek yön yaklaşık 25 dk.</p><div class="move"><b>Sonraki adım:</b> St. George’ta in, 10:00 dönüş ferry’sine geç</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=Whitehall%20Terminal%2C%20New%20York%2C%20NY" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=Whitehall%20Terminal%2C%20New%20York%2C%20NY&amp;destination=St.%20George%20Terminal%2C%20Staten%20Island%2C%20NY&amp;travelmode=transit" target="_blank">Sonraki durağa git</a></div></div></article><article class="stop transit" data-key="2-4">
+<button aria-label="tamamla" class="check" onclick="toggle('2-4')"></button>
+<div class="timeline"><div class="time">10:00</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">ULAŞIM</span><span class="dur">25 dk</span></div>
+<h3>Staten Island Ferry, Manhattan’a dönüş</h3>
+<p>St. George’ta tekneden inmek gerekiyor; aynı teknede kalınmıyor.</p><div class="move"><b>Sonraki adım:</b> Oculus’a 15-18 dk yürü</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=St.%20George%20Terminal%2C%20Staten%20Island%2C%20NY" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=St.%20George%20Terminal%2C%20Staten%20Island%2C%20NY&amp;destination=185%20Greenwich%20St%2C%20New%20York%2C%20NY%2010007&amp;travelmode=transit" target="_blank">Sonraki durağa git</a></div></div></article><article class="stop" data-key="2-5">
+<button aria-label="tamamla" class="check" onclick="toggle('2-5')"></button>
+<div class="timeline"><div class="time">10:45</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">GEZİ</span><span class="dur">35 dk</span></div>
+<h3>The Oculus</h3>
+<p>İç mimari + kısa tur.</p><div class="move"><b>Sonraki adım:</b> 9/11 Memorial dış alanı 2-3 dk</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=185%20Greenwich%20St%2C%20New%20York%2C%20NY%2010007" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=185%20Greenwich%20St%2C%20New%20York%2C%20NY%2010007&amp;destination=180%20Greenwich%20St%2C%20New%20York%2C%20NY%2010007&amp;travelmode=walking" target="_blank">Sonraki durağa git</a></div></div></article><article class="stop" data-key="2-7">
+<button aria-label="tamamla" class="check" onclick="toggle('2-7')"></button>
+<div class="timeline"><div class="time">12:00</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">GEZİ</span><span class="dur">45 dk</span></div>
+<h3>Brooklyn Bridge yürüyüşü</h3>
+<p>Manhattan → Brooklyn yönü, DUMBO’ya doğal iniş sağlar.</p><div class="move"><b>Sonraki adım:</b> DUMBO’ya köprü üzerinden devam</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=Brooklyn%20Bridge%20Promenade%2C%20New%20York%2C%20NY" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=Brooklyn%20Bridge%20Promenade%2C%20New%20York%2C%20NY&amp;destination=Washington%20St%20%26%20Water%20St%2C%20Brooklyn%2C%20NY%2011201&amp;travelmode=walking" target="_blank">Sonraki durağa git</a></div></div></article><article class="stop meal" data-key="2-8">
+<button aria-label="tamamla" class="check" onclick="toggle('2-8')"></button>
+<div class="timeline"><div class="time">12:50</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">YEMEK</span><span class="dur">1 sa 50 dk</span></div>
+<h3>DUMBO + Brooklyn Bridge Park + öğle</h3>
+<p>Washington St fotoğrafı + Pebble Beach + oturarak öğle yemeği.</p><div class="move"><b>Sonraki adım:</b> High St A/C istasyonuna 10-12 dk</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=Washington%20St%20%26%20Water%20St%2C%20Brooklyn%2C%20NY%2011201" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=Washington%20St%20%26%20Water%20St%2C%20Brooklyn%2C%20NY%2011201&amp;destination=High%20St-Brooklyn%20Bridge%20Station%2C%20Brooklyn%2C%20NY&amp;travelmode=walking" target="_blank">Sonraki durağa git</a></div></div></article><article class="stop transit" data-key="2-9">
+<button aria-label="tamamla" class="check" onclick="toggle('2-9')"></button>
+<div class="timeline"><div class="time">14:50</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">ULAŞIM</span><span class="dur">35-45 dk</span></div>
+<h3>A/C subway → 42 St-Port Authority</h3>
+<p>Brooklyn’den Midtown’a tek ulaşım sıçraması.</p><div class="move"><b>Sonraki adım:</b> Times Square’a 5-8 dk yürü</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=High%20St-Brooklyn%20Bridge%20Station%2C%20Brooklyn%2C%20NY" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=High%20St-Brooklyn%20Bridge%20Station%2C%20Brooklyn%2C%20NY&amp;destination=Times%20Square%2C%20New%20York%2C%20NY%2010036&amp;travelmode=transit" target="_blank">Sonraki durağa git</a></div></div></article><article class="stop event" data-key="2-14">
+<button aria-label="tamamla" class="check" onclick="toggle('2-14')"></button>
+<div class="timeline"><div class="time">18:15</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">SABİT</span><span class="dur">45 dk tampon</span></div>
+<h3>Gershwin Theatre giriş</h3>
+<p>Wicked resmi önerisi: en az 30 dk önce gel. Kapılar 45 dk önce açılıyor.</p><div class="move"><b>Sonraki adım:</b> 19:00 perde</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=222%20W%2051st%20St%2C%20New%20York%2C%20NY%2010019" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=222%20W%2051st%20St%2C%20New%20York%2C%20NY%2010019&amp;destination=222%20W%2051st%20St%2C%20New%20York%2C%20NY%2010019&amp;travelmode=walking" target="_blank">Sonraki durağa git</a></div></div></article><article class="stop event" data-key="2-15">
+<button aria-label="tamamla" class="check" onclick="toggle('2-15')"></button>
+<div class="timeline"><div class="time">19:00</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">SABİT</span><span class="dur">2 sa 45 dk</span></div>
+<h3>Wicked</h3>
+<p>22 Eylül 2026 performansı 19:00. 15 dk ara dahil.</p><div class="move"><b>Sonraki adım:</b> ~21:45 çıkış, otele 10-12 dk yürü</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=222%20W%2051st%20St%2C%20New%20York%2C%20NY%2010019" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=222%20W%2051st%20St%2C%20New%20York%2C%20NY%2010019&amp;destination=30%20W%2046th%20St%2C%20New%20York%2C%20NY%2010036&amp;travelmode=walking" target="_blank">Otele dön</a></div></div></article><article class="stop hotel" data-key="2-hotel-return">
+<button aria-label="tamamla" class="check" onclick="toggle('2-hotel-return')"></button>
+<div class="timeline"><div class="time">Çıkışta</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">OTEL</span><span class="dur">10-12 dk</span></div>
+<h3>Times Square gece görünümü</h3><p>Wicked çıkışında Times Square’dan geçin. Meydanı gece ışıklarıyla görün, fotoğraf çekin; süreyi enerjinize göre serbest bırakın.</p><div class="move"><b>Sonraki adım:</b> Times Square’dan Hilton’a yaklaşık 5-10 dk yürüyüş.</div><div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=Times%20Square%2C%20New%20York%2C%20NY" target="_blank">Times Square’ı aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=Times%20Square%2C%20New%20York%2C%20NY&amp;destination=30%20W%2046th%20St%2C%20New%20York%2C%20NY%2010036&amp;travelmode=walking" target="_blank">Otele dön</a></div></div></article></div>
+<div class="mapsecondary"><div><b>Harita ikincil.</b> Önce yukarıdaki sıra takip ediliyor; harita sadece navigasyon için açılıyor.</div><a class="routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Bowling%20Green%2C%20New%20York%2C%20NY%2010004&amp;destination=222%20W%2051st%20St%2C%20New%20York%2C%20NY%2010019&amp;travelmode=walking&amp;waypoints=Wall%20Street%2C%20New%20York%2C%20NY%2010005%7C4%20Whitehall%20St%2C%20New%20York%2C%20NY%2010004%7C185%20Greenwich%20St%2C%20New%20York%2C%20NY%2010007%7C180%20Greenwich%20St%2C%20New%20York%2C%20NY%2010007%7CBrooklyn%20Bridge%20Promenade%2C%20New%20York%2C%20NY%7CWashington%20St%20%26%20Water%20St%2C%20Brooklyn%2C%20NY%2011201%7CTimes%20Square%2C%20New%20York%2C%20NY%2010036%7C1600%20Broadway%2C%20New%20York%2C%20NY%2010019" target="_blank">Günün yürüyüş rotasını Google Maps’te aç ↗</a></div>
+</section><section class="day" id="day-3">
+<div class="dayhero"><div class="eyebrow">23 Eylül Çarşamba</div><h2>SoHo + Little Italy + Chinatown + Williamsburg + House of Yes</h2><div class="metrics"><span>08:55 - gece</span><span>~6-7 km yürüyüş</span><span>Orta</span></div>
+<p><b>Neden bu sıra?</b> SoHo’dan doğuya/güneye yürüyerek Little Italy ve Chinatown bitiyor. Sonra J/M ile Brooklyn’e geçip Williamsburg’dan L hattıyla House of Yes’e ilerliyoruz; Manhattan’a geri dönüş yok.</p><p class="drop"><b>Yorulursa:</b> House of Yes saati erken çıkarsa Williamsburg süresini kısalt. House of Yes bileti yoksa bu günü “Brooklyn akşamı” olarak bırak.</p><div class="alert"><b>ÖNEMLİ: House of Yes’in resmi 2026 takviminde şu an 23 Eylül Çarşamba için halka açık etkinlik görünmüyor. Elinizde bilet / özel rezervasyon varsa onun saati esas alınmalı.</b></div><p class="flow"><b>Otel bazlı akış:</b> Hilton → SoHo → Chinatown → Brooklyn → House of Yes → Hilton</p></div>
+<div class="progressrow"><span>Gün ilerlemesi</span><span id="count-3">0/12</span></div><div class="progress"><div class="bar" id="bar-3"></div></div>
+<div class="stops"><article class="stop hotel" data-key="3-hotel-start">
+<button aria-label="tamamla" class="check" onclick="toggle('3-hotel-start')"></button>
+<div class="timeline"><div class="time">08:55</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">OTEL</span><span class="dur">30-35 dk</span></div>
+<h3>Otelden SoHo’ya</h3><p>47–50 St Rockefeller Center istasyonuna kısa yürü; downtown B/D/F/M seçenekleriyle Broadway–Lafayette yönüne inip Prince/Greene tarafına geç.</p><div class="move"><b>Sonraki adım:</b> 09:30 SoHo başlangıcı</div><div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=30%20W%2046th%20St%2C%20New%20York%2C%20NY%2010036" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=30%20W%2046th%20St%2C%20New%20York%2C%20NY%2010036&amp;destination=Greene%20St%20%26%20Prince%20St%2C%20New%20York%2C%20NY%2010012&amp;travelmode=transit" target="_blank">Sonraki durağa git</a></div></div></article><article class="stop" data-key="3-0">
+<button aria-label="tamamla" class="check" onclick="toggle('3-0')"></button>
+<div class="timeline"><div class="time">09:30</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">GEZİ</span><span class="dur">1 sa 20 dk</span></div>
+<h3>SoHo, Greene / Prince / Mercer</h3>
+<p>Cast-iron sokakları ve mağazaları sabah daha rahat.</p><div class="move"><b>Sonraki adım:</b> Little Italy’ye 10-12 dk yürü</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=Greene%20St%20%26%20Prince%20St%2C%20New%20York%2C%20NY%2010012" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=Greene%20St%20%26%20Prince%20St%2C%20New%20York%2C%20NY%2010012&amp;destination=Mulberry%20St%20%26%20Hester%20St%2C%20New%20York%2C%20NY%2010013&amp;travelmode=walking" target="_blank">Sonraki durağa git</a></div></div></article><article class="stop" data-key="3-1">
+<button aria-label="tamamla" class="check" onclick="toggle('3-1')"></button>
+<div class="timeline"><div class="time">11:00</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">GEZİ</span><span class="dur">30 dk</span></div>
+<h3>Little Italy, Mulberry Street</h3>
+<p>Kısa geçiş durağı; uzun tutmaya gerek yok.</p><div class="move"><b>Sonraki adım:</b> Chinatown’a 7-8 dk yürü</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=Mulberry%20St%20%26%20Hester%20St%2C%20New%20York%2C%20NY%2010013" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=Mulberry%20St%20%26%20Hester%20St%2C%20New%20York%2C%20NY%2010013&amp;destination=Doyers%20St%2C%20New%20York%2C%20NY%2010013&amp;travelmode=walking" target="_blank">Sonraki durağa git</a></div></div></article><article class="stop meal" data-key="3-2">
+<button aria-label="tamamla" class="check" onclick="toggle('3-2')"></button>
+<div class="timeline"><div class="time">11:40</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">YEMEK</span><span class="dur">1 sa 40 dk</span></div>
+<h3>Chinatown, Doyers / Pell / Mott</h3>
+<p>Öğle yemeğini burada yap; yürüyüşü böl.</p><div class="move"><b>Sonraki adım:</b> Essex/LES’e 15-20 dk yürü</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=Doyers%20St%2C%20New%20York%2C%20NY%2010013" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=Doyers%20St%2C%20New%20York%2C%20NY%2010013&amp;destination=88%20Essex%20St%2C%20New%20York%2C%20NY%2010002&amp;travelmode=walking" target="_blank">Sonraki durağa git</a></div></div></article></div>
+<div class="mapsecondary"><div><b>Harita ikincil.</b> Önce yukarıdaki sıra takip ediliyor; harita sadece navigasyon için açılıyor.</div><a class="routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Greene%20St%20%26%20Prince%20St%2C%20New%20York%2C%20NY%2010012&amp;destination=2%20Wyckoff%20Ave%2C%20Brooklyn%2C%20NY%2011237&amp;travelmode=walking&amp;waypoints=Mulberry%20St%20%26%20Hester%20St%2C%20New%20York%2C%20NY%2010013%7CDoyers%20St%2C%20New%20York%2C%20NY%2010013%7C88%20Essex%20St%2C%20New%20York%2C%20NY%2010002%7C15%20River%20St%2C%20Brooklyn%2C%20NY%2011249%7CBedford%20Ave%2C%20Brooklyn%2C%20NY%2011249%7CWilliamsburg%2C%20Brooklyn%2C%20NY" target="_blank">Günün yürüyüş rotasını Google Maps’te aç ↗</a></div>
+</section><section class="day" id="day-4">
+<div class="dayhero"><div class="eyebrow">24 Eylül Perşembe</div><h2>Roosevelt Island Tram + Midtown East + Grand Central + The Campbell</h2><div class="metrics"><span>10:30 - gece</span><span>~5 km yürüyüş</span><span>Rahat</span></div>
+<p><b>Neden bu sıra?</b> Bir önceki gece geç bitebileceği için bilinçli geç başlıyor. Tram + Roosevelt Island, sonra 42nd Street aksıyla Grand Central. The Campbell zaten Grand Central içinde/yanında olduğu için gün aynı bölgede kapanıyor.</p><p class="drop"><b>Yorulursa:</b> Yorgunsan Four Freedoms Park’ı çıkar ve tramdan sonra doğrudan Midtown East’e dön.</p><p class="flow"><b>Otel bazlı akış:</b> Hilton → Tram → Roosevelt Island → Grand Central → Hilton → Campbell → Hilton</p></div>
+<div class="progressrow"><span>Gün ilerlemesi</span><span id="count-4">0/11</span></div><div class="progress"><div class="bar" id="bar-4"></div></div>
+<div class="stops"><article class="stop hotel" data-key="4-hotel-start">
+<button aria-label="tamamla" class="check" onclick="toggle('4-hotel-start')"></button>
+<div class="timeline"><div class="time">10:30</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">OTEL</span><span class="dur">20-25 dk</span></div>
+<h3>Otelden Roosevelt Island Tram’a</h3><p>46th Street’ten 59th St &amp; 2nd Ave tram istasyonuna yürüyüş yaklaşık 20-25 dk. Sabah sakin olduğu için düz yürüyüş en basit seçenek.</p><div class="move"><b>Sonraki adım:</b> 10:55 tram istasyonu</div><div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=30%20W%2046th%20St%2C%20New%20York%2C%20NY%2010036" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=30%20W%2046th%20St%2C%20New%20York%2C%20NY%2010036&amp;destination=Roosevelt%20Island%20Tramway%20Manhattan%20Station%2C%20New%20York%2C%20NY&amp;travelmode=walking" target="_blank">Sonraki durağa git</a></div></div></article><article class="stop transit" data-key="4-0">
+<button aria-label="tamamla" class="check" onclick="toggle('4-0')"></button>
+<div class="timeline"><div class="time">11:00</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">ULAŞIM</span><span class="dur">15 dk</span></div>
+<h3>Roosevelt Island Tram, Manhattan istasyonu</h3>
+<p>59th/2nd Ave. OMNY kabul ediyor; off-peak yaklaşık 15 dk aralık.</p><div class="move"><b>Sonraki adım:</b> Tram geçişi ~4-5 dk</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=254%20E%2060th%20St%2C%20New%20York%2C%20NY%2010022" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=254%20E%2060th%20St%2C%20New%20York%2C%20NY%2010022&amp;destination=Roosevelt%20Island%20Tramway%2C%20Roosevelt%20Island%2C%20NY&amp;travelmode=transit" target="_blank">Sonraki durağa git</a></div></div></article><article class="stop transit" data-key="4-3">
+<button aria-label="tamamla" class="check" onclick="toggle('4-3')"></button>
+<div class="timeline"><div class="time">13:10</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">ULAŞIM</span><span class="dur">15 dk</span></div>
+<h3>Tram ile Manhattan’a dönüş</h3>
+<p>Dönüşte yeniden ücret/tap gerekiyor.</p><div class="move"><b>Sonraki adım:</b> Midtown East’te öğle</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=Roosevelt%20Island%20Tramway%2C%20Roosevelt%20Island%2C%20NY" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=Roosevelt%20Island%20Tramway%2C%20Roosevelt%20Island%2C%20NY&amp;destination=Midtown%20East%2C%20New%20York%2C%20NY&amp;travelmode=transit" target="_blank">Sonraki durağa git</a></div></div></article><article class="stop" data-key="4-6">
+<button aria-label="tamamla" class="check" onclick="toggle('4-6')"></button>
+<div class="timeline"><div class="time">15:50</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">GEZİ</span><span class="dur">60 dk</span></div>
+<h3>Grand Central Terminal</h3>
+<p>Main Concourse + Whispering Gallery + kısa dinlenme.</p><div class="move"><b>Sonraki adım:</b> The Campbell aynı kompleks / Vanderbilt Ave tarafı</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=89%20E%2042nd%20St%2C%20New%20York%2C%20NY%2010017" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=89%20E%2042nd%20St%2C%20New%20York%2C%20NY%2010017&amp;destination=15%20Vanderbilt%20Ave%2C%20New%20York%2C%20NY%2010017&amp;travelmode=walking" target="_blank">Sonraki durağa git</a></div></div></article><article class="stop hotel" data-key="4-7">
+<button aria-label="tamamla" class="check" onclick="toggle('4-7')"></button>
+<div class="timeline"><div class="time">17:00</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">DİNLENME</span><span class="dur">1-2 saat</span></div>
+<h3>Grand Central → otele dönüş + dinlenme</h3>
+<p>Grand Central’dan Hilton’a yaklaşık 10-12 dk yürüyüş. Odaya dönmek için rotanın en mantıklı günü: duş, kıyafet değişimi, şarj, 1-2 saat ayak dinlendirme.</p><div class="move"><b>Sonraki adım:</b> The Campbell rezervasyonundan 20 dk önce otelden çık</div>
+<div class="actions"><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=89%20E%2042nd%20St%2C%20New%20York%2C%20NY%2010017&amp;destination=30%20W%2046th%20St%2C%20New%20York%2C%20NY%2010036&amp;travelmode=walking" target="_blank">Otele rota</a></div></div></article><article class="stop event" data-key="4-8">
+<button aria-label="tamamla" class="check" onclick="toggle('4-8')"></button>
+<div class="timeline"><div class="time">Rezervasyon</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">SABİT</span><span class="dur">2 saat</span></div>
+<h3>The Campbell Terrace / Bar</h3>
+<p>Grand Central kompleksindeki The Campbell. Rezervasyondan yaklaşık 20 dk önce Hilton’dan çık; yürüyerek 10-12 dk. Terrace açık hava hissi verir ancak klasik rooftop değildir.</p><div class="move"><b>Sonraki adım:</b> Gece otele 10-12 dk yürü</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=15%20Vanderbilt%20Ave%2C%20New%20York%2C%20NY%2010017" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=15%20Vanderbilt%20Ave%2C%20New%20York%2C%20NY%2010017&amp;destination=30%20W%2046th%20St%2C%20New%20York%2C%20NY%2010036&amp;travelmode=walking" target="_blank">Otele dön</a></div></div></article><article class="stop hotel" data-key="4-hotel-return">
+<button aria-label="tamamla" class="check" onclick="toggle('4-hotel-return')"></button>
+<div class="timeline"><div class="time">Gece</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">OTEL</span><span class="dur">10-12 dk</span></div>
+<h3>The Campbell → Hilton</h3><p>Grand Central’dan 46th Street’e kısa, düz bir Midtown yürüyüşü. Metro gerekmiyor.</p><div class="move"><b>Sonraki adım:</b> Günü otelde bitir</div><div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=15%20Vanderbilt%20Ave%2C%20New%20York%2C%20NY%2010017" target="_blank">Konumu aç</a><a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;origin=15%20Vanderbilt%20Ave%2C%20New%20York%2C%20NY%2010017&amp;destination=30%20W%2046th%20St%2C%20New%20York%2C%20NY%2010036&amp;travelmode=walking" target="_blank">Sonraki durağa git</a></div></div></article></div>
+<div class="mapsecondary"><div><b>Harita ikincil.</b> Önce yukarıdaki sıra takip ediliyor; harita sadece navigasyon için açılıyor.</div><a class="routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Roosevelt%20Island%20Tramway%2C%20Roosevelt%20Island%2C%20NY&amp;destination=15%20Vanderbilt%20Ave%2C%20New%20York%2C%20NY%2010017&amp;travelmode=walking&amp;waypoints=1%20FDR%20Four%20Freedoms%20Park%2C%20Roosevelt%20Island%2C%20NY%2010044%7CMidtown%20East%2C%20New%20York%2C%20NY%7CTudor%20City%20Place%20%26%20E%2042nd%20St%2C%20New%20York%2C%20NY%7C89%20E%2042nd%20St%2C%20New%20York%2C%20NY%2010017" target="_blank">Günün yürüyüş rotasını Google Maps’te aç ↗</a></div>
+</section><section class="day" id="day-5">
+<div class="dayhero"><div class="eyebrow">25 Eylül Cuma</div><h2>Tampon sabah + 15:00 havaalanı çıkışı</h2><div class="metrics"><span>09:00 - 15:00</span><span>Düşük yürüyüş</span><span>Çok hafif</span></div>
+<p><b>Neden bu sıra?</b> Otel Midtown’un merkezinde olduğu için son sabah yalnızca yakın çevrede kaçan bir yeri telafi ediyoruz. Hilton’un resmi check-out saati 12:00; valizleri resepsiyona bırakarak 15:00 transferine kadar otel çevresinde kalın.</p><p class="drop"><b>Yorulursa:</b> Hiçbir şeyi “yetiştirmeye” çalışma. 15:00 çıkışı sabit kabul et.</p><p class="flow"><b>Otel bazlı akış:</b> Hilton çevresi → check-out → öğle → Hilton → havaalanı</p></div>
+<div class="progressrow"><span>Gün ilerlemesi</span><span id="count-5">0/5</span></div><div class="progress"><div class="bar" id="bar-5"></div></div>
+<div class="stops"><article class="stop rest" data-key="5-0">
+<button aria-label="tamamla" class="check" onclick="toggle('5-0')"></button>
+<div class="timeline"><div class="time">09:00</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">DİNLENME</span><span class="dur">90 dk</span></div>
+<h3>Kahvaltı + eksik kalan tek yer</h3>
+<p>Sadece daha önce tamamlanmamış bir yakın madde varsa onu seç. Times Square, Rockefeller, FAO, LEGO ve 5th Avenue ilk gün tamamlandığı için bunlara geri dönme. Yeni bölgeye de gitme.</p><div class="move"><b>Sonraki adım:</b> Otele dön</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=30%20W%2046th%20St%2C%20New%20York%2C%20NY%2010036" target="_blank">Otel konumu</a></div></div></article><article class="stop transit" data-key="5-1">
+<button aria-label="tamamla" class="check" onclick="toggle('5-1')"></button>
+<div class="timeline"><div class="time">10:45</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">ULAŞIM</span><span class="dur">75 dk</span></div>
+<h3>Hilton’a dönüş + check-out + valiz bırakma</h3>
+<p>12:00 resmi check-out. Valizleri resepsiyon/bell desk’e bırak; transfer saatine kadar elde taşıma.</p><div class="move"><b>Sonraki adım:</b> Otel çevresinde kal</div>
+<div class="actions"><a class="btn primary" href="https://www.google.com/maps/search/?api=1&amp;query=30%20W%2046th%20St%2C%20New%20York%2C%20NY%2010036" target="_blank">Otele dön</a></div></div></article><article class="stop meal" data-key="5-2">
+<button aria-label="tamamla" class="check" onclick="toggle('5-2')"></button>
+<div class="timeline"><div class="time">12:30</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">YEMEK</span><span class="dur">60 dk</span></div>
+<h3>Erken öğle yemeği</h3>
+<p>46th Street / Bryant Park / Grand Central bandında kal. 14:15’ten sonra yeni bir durak açma.</p><div class="move"><b>Sonraki adım:</b> Otele dön</div>
+<div class="actions"></div></div></article><article class="stop transit" data-key="5-3">
+<button aria-label="tamamla" class="check" onclick="toggle('5-3')"></button>
+<div class="timeline"><div class="time">14:15</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">ULAŞIM</span><span class="dur">45 dk</span></div>
+<h3>Havaalanı hazırlık tamponu</h3>
+<p>Otele dön, valizi teslim al, tuvalet/su/telefon şarjı. Hilton’un havaalanı shuttle hizmeti yok; transfer modu havaalanı belli olunca kesinleşecek.</p><div class="move"><b>Sonraki adım:</b> 15:00 otelden çıkış</div>
+<div class="actions"></div></div></article><article class="stop event" data-key="5-4">
+<button aria-label="tamamla" class="check" onclick="toggle('5-4')"></button>
+<div class="timeline"><div class="time">15:00</div><div class="line"></div></div>
+<div class="body"><div class="topline"><span class="badge">SABİT</span><span class="dur">-</span></div>
+<h3>Havaalanına hareket</h3>
+<p>30 W 46th St adresinden sabit hareket. Hangi havaalanı (JFK/LGA/EWR) olduğu verilince bu son bacağı net süre ve araç önerisiyle güncelleyebiliriz.</p><div class="move"><b>Sonraki adım:</b> -</div>
+<div class="actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=30%20W%2046th%20St%2C%20New%20York%2C%20NY%2010036" target="_blank">Çıkış noktası: Hilton</a></div></div></article></div>
+<div class="mapsecondary"><div><b>Harita ikincil.</b> Önce yukarıdaki sıra takip ediliyor; harita sadece navigasyon için açılıyor.</div></div>
+</section>
+<div class="sources"><b>Kaynak doğrulamaları (24 Ağustos 2026):</b> Hilton resmi otel sayfası: 30 W 46th St, check-in 15:00, check-out 12:00 ve havaalanı shuttle yok. Diğer etkinlik/mekan doğrulamaları v2 ile aynı. Metro bacakları rota planlama tahminidir; canlı MTA servis değişikliklerini seyahat gününde kontrol edin.</div></div>
+<script>let active=0;let state=JSON.parse(localStorage.getItem('nycPlanV3')||'{}');function showDay(i){active=i;document.querySelectorAll('.day').forEach((x,j)=>x.classList.toggle('active',j===i));document.querySelectorAll('.tab').forEach((x,j)=>x.classList.toggle('active',j===i));window.scrollTo({top:document.querySelector('.tabs').offsetTop-4,behavior:'smooth'});update()}function toggle(k){state[k]=!state[k];localStorage.setItem('nycPlanV3',JSON.stringify(state));update()}function update(){document.querySelectorAll('.stop').forEach(x=>x.classList.toggle('done',!!state[x.dataset.key]));let ks0=Array.from(document.querySelectorAll('#day-0 .stop'));let dn0=ks0.filter(x=>state[x.dataset.key]).length;document.getElementById('count-0').textContent=dn0+'/'+ks0.length;document.getElementById('bar-0').style.width=(dn0/ks0.length*100)+'%';let ks1=Array.from(document.querySelectorAll('#day-1 .stop'));let dn1=ks1.filter(x=>state[x.dataset.key]).length;document.getElementById('count-1').textContent=dn1+'/'+ks1.length;document.getElementById('bar-1').style.width=(dn1/ks1.length*100)+'%';let ks2=Array.from(document.querySelectorAll('#day-2 .stop'));let dn2=ks2.filter(x=>state[x.dataset.key]).length;document.getElementById('count-2').textContent=dn2+'/'+ks2.length;document.getElementById('bar-2').style.width=(dn2/ks2.length*100)+'%';let ks3=Array.from(document.querySelectorAll('#day-3 .stop'));let dn3=ks3.filter(x=>state[x.dataset.key]).length;document.getElementById('count-3').textContent=dn3+'/'+ks3.length;document.getElementById('bar-3').style.width=(dn3/ks3.length*100)+'%';let ks4=Array.from(document.querySelectorAll('#day-4 .stop'));let dn4=ks4.filter(x=>state[x.dataset.key]).length;document.getElementById('count-4').textContent=dn4+'/'+ks4.length;document.getElementById('bar-4').style.width=(dn4/ks4.length*100)+'%';let ks5=Array.from(document.querySelectorAll('#day-5 .stop'));let dn5=ks5.filter(x=>state[x.dataset.key]).length;document.getElementById('count-5').textContent=dn5+'/'+ks5.length;document.getElementById('bar-5').style.width=(dn5/ks5.length*100)+'%';}showDay(0);</script></body></html>
