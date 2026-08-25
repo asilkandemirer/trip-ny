@@ -204,6 +204,348 @@ button,input,select{font:inherit} .app{max-width:760px;margin:auto;padding:8px 8
   .detail{height:100dvh}
 }
 
+
+/* v13.4 — notes truly pinned to viewport top + hidden scrollbars */
+.notes-stream{
+  position:absolute!important;
+  z-index:18!important;
+  top:max(10px,env(safe-area-inset-top))!important;
+  left:62px!important;
+  right:112px!important;
+  max-height:34%!important;
+  padding:0!important;
+  margin:0!important;
+  overflow-y:auto!important;
+  overscroll-behavior:contain;
+  scrollbar-width:none!important;
+  -ms-overflow-style:none!important;
+}
+.notes-stream::-webkit-scrollbar{display:none!important;width:0!important;height:0!important}
+
+.comment-card{
+  background:rgba(255,255,255,.48)!important;
+  border-color:rgba(255,255,255,.36)!important;
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+}
+
+.days,.summary,.notes-stream,.notes,.panel,.app{
+  scrollbar-width:none!important;
+  -ms-overflow-style:none!important;
+}
+.days::-webkit-scrollbar,
+.summary::-webkit-scrollbar,
+.notes-stream::-webkit-scrollbar,
+.notes::-webkit-scrollbar,
+.panel::-webkit-scrollbar,
+.app::-webkit-scrollbar{
+  display:none!important;
+  width:0!important;
+  height:0!important;
+}
+
+.notes-mode .notes-stream{
+  display:flex!important;
+}
+.detail:not(.notes-mode) .notes-stream{
+  display:none!important;
+}
+
+@media(max-width:520px){
+  .notes-stream{
+    left:58px!important;
+    right:108px!important;
+    max-height:32%!important;
+  }
+}
+
+
+/* v13.5 — notes directly under Home / Note / Map controls */
+.notes-stream{
+  top:max(66px,calc(env(safe-area-inset-top) + 56px))!important;
+  left:14px!important;
+  right:14px!important;
+  max-height:34%!important;
+  z-index:17!important;
+}
+@media(max-width:520px){
+  .notes-stream{
+    top:max(64px,calc(env(safe-area-inset-top) + 54px))!important;
+    left:12px!important;
+    right:12px!important;
+    max-height:32%!important;
+  }
+}
+
+
+/* v14 — three-layer notes architecture */
+.notes-stream{
+  position:absolute!important;
+  z-index:18!important;
+  top:max(66px,calc(env(safe-area-inset-top) + 56px))!important;
+  left:14px!important;
+  right:14px!important;
+  bottom:auto!important;
+  max-height:34%!important;
+  overflow-y:auto!important;
+  display:none;
+  flex-direction:column;
+  gap:7px;
+  scrollbar-width:none!important;
+  -ms-overflow-style:none!important;
+}
+.notes-stream::-webkit-scrollbar{display:none!important;width:0!important;height:0!important}
+.detail.notes-mode .notes-stream{display:flex!important}
+
+.detail.notes-mode .detailcopy{
+  display:none!important;
+}
+
+.notes-bottom-layer{
+  position:absolute;
+  z-index:19;
+  left:14px;
+  right:14px;
+  bottom:max(12px,env(safe-area-inset-bottom));
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.notes-bottom-layer[hidden]{display:none!important}
+
+.note-composer-fixed{
+  display:grid;
+  grid-template-columns:1fr 46px;
+  gap:8px;
+  padding:7px;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:18px;
+  background:rgba(18,18,18,.58);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+}
+.note-composer-fixed input{
+  min-width:0;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:#fff;
+  -webkit-text-fill-color:#fff;
+  font-size:16px;
+  padding:11px 10px;
+}
+.note-composer-fixed input::placeholder{color:rgba(255,255,255,.68)}
+.note-composer-fixed button{
+  width:46px;
+  height:46px;
+  border:0;
+  border-radius:14px;
+  background:#fff;
+  color:#111;
+  font-size:22px;
+  font-weight:900;
+}
+
+.notes-nav-fixed{
+  display:grid;
+  grid-template-columns:40px 1fr 1fr 40px;
+  gap:8px;
+  align-items:center;
+}
+.notes-nav-fixed .nav,
+.notes-nav-fixed .act{
+  min-height:42px;
+}
+
+.comment-card{
+  background:rgba(255,255,255,.50)!important;
+  border:1px solid rgba(255,255,255,.38)!important;
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+}
+.comment-delete{
+  background:rgba(255,255,255,.22)!important;
+  color:#555!important;
+}
+
+@media(max-width:520px){
+  .notes-stream{
+    left:12px!important;
+    right:12px!important;
+    top:max(64px,calc(env(safe-area-inset-top) + 54px))!important;
+    max-height:32%!important;
+  }
+  .notes-bottom-layer{
+    left:12px;
+    right:12px;
+    bottom:max(10px,env(safe-area-inset-bottom));
+  }
+}
+
+
+/* v14.1 — notes stream is now a true sibling layer */
+.detail > .notes-stream{
+  position:absolute!important;
+  z-index:18!important;
+  top:max(66px,calc(env(safe-area-inset-top) + 56px))!important;
+  left:14px!important;
+  right:14px!important;
+  max-height:34%!important;
+  overflow-y:auto!important;
+  display:none!important;
+  flex-direction:column;
+  gap:7px;
+  pointer-events:auto;
+}
+.detail.notes-mode > .notes-stream{
+  display:flex!important;
+}
+.detail.notes-mode .detailcopy{
+  display:none!important;
+}
+@media(max-width:520px){
+  .detail > .notes-stream{
+    top:max(64px,calc(env(safe-area-inset-top) + 54px))!important;
+    left:12px!important;
+    right:12px!important;
+    max-height:32%!important;
+  }
+}
+
+
+/* v14.2 — fully visible note cards under top controls */
+.detail > .notes-stream{
+  top:max(74px,calc(env(safe-area-inset-top) + 64px))!important;
+  left:14px!important;
+  right:14px!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:36%!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  padding:0 0 4px!important;
+  gap:8px!important;
+  align-items:stretch!important;
+}
+
+.detail > .notes-stream .comment-card{
+  flex:0 0 auto!important;
+  width:100%!important;
+  min-height:50px!important;
+  height:auto!important;
+  overflow:visible!important;
+  padding:10px 11px!important;
+  border-radius:15px!important;
+}
+
+.detail > .notes-stream .comment-text{
+  display:block!important;
+  overflow:visible!important;
+  white-space:normal!important;
+  line-height:1.35!important;
+}
+
+@media(max-width:520px){
+  .detail > .notes-stream{
+    top:max(72px,calc(env(safe-area-inset-top) + 62px))!important;
+    left:12px!important;
+    right:12px!important;
+    max-height:35%!important;
+  }
+}
+
+
+/* v14.3 structural fix: notesStream is a real direct child of .detail */
+.detail > #notesStream{
+  position:absolute!important;
+  z-index:30!important;
+  top:76px!important;
+  left:16px!important;
+  right:16px!important;
+  width:auto!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:32%!important;
+  margin:0!important;
+  padding:0!important;
+  display:none!important;
+  flex-direction:column!important;
+  gap:8px!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  background:transparent!important;
+  scrollbar-width:none!important;
+  -ms-overflow-style:none!important;
+}
+.detail.notes-mode > #notesStream{display:flex!important}
+.detail > #notesStream::-webkit-scrollbar{display:none!important}
+.detail > #notesStream > .comment-card{
+  position:relative!important;
+  flex:0 0 auto!important;
+  width:100%!important;
+  min-height:50px!important;
+  height:auto!important;
+  margin:0!important;
+  overflow:visible!important;
+}
+@supports (padding-top: env(safe-area-inset-top)){
+  .detail > #notesStream{
+    top:calc(env(safe-area-inset-top) + 62px)!important;
+  }
+}
+
+
+/* v15 notes fill remaining space */
+.detail.notes-mode > #notesStream{
+  top:max(76px,calc(env(safe-area-inset-top) + 62px))!important;
+  bottom:190px!important;
+  max-height:none!important;
+  height:auto!important;
+  overflow-y:auto!important;
+  padding-bottom:6px!important;
+}
+
+/* emergency */
+.emergency-icon svg{
+  width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;
+}
+.emergency-sheet{
+  position:absolute;inset:0;z-index:40;
+  display:grid;place-items:center;
+  padding:20px;
+  background:rgba(0,0,0,.34);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+}
+.emergency-sheet[hidden]{display:none!important}
+.emergency-card{
+  width:min(92vw,390px);
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:22px;
+  padding:16px;
+  background:rgba(20,20,20,.82);
+  color:#fff;
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  box-shadow:0 24px 70px rgba(0,0,0,.35);
+}
+.emergency-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.emergency-head small{font-size:9px;font-weight:900;letter-spacing:.08em;color:rgba(255,255,255,.58)}
+.emergency-head h3{font-size:22px;line-height:1.05;margin:3px 0 0}
+.emergency-close{
+  width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.08);color:#fff;font-size:22px;
+}
+.emergency-card p{font-size:12px;line-height:1.45;color:rgba(255,255,255,.72);margin:12px 0}
+.emergency-actions{display:grid;gap:8px}
+.emergency-actions button{
+  display:flex;align-items:center;justify-content:space-between;
+  border:1px solid rgba(255,255,255,.18);border-radius:14px;
+  background:rgba(255,255,255,.92);color:#111;
+  padding:13px 14px;font-weight:900;font-size:13px;
+}
+.emergency-status{min-height:16px;margin-top:10px;font-size:10px;color:rgba(255,255,255,.62)}
+
 </style></head>
 <body>
 <div class="app"><div class="top"><div class="days" id="days"></div><div class="summary" id="summary"></div></div><h1 class="daytitle" id="daytitle"></h1><div class="list" id="list"></div></div>
@@ -213,13 +555,51 @@ button,input,select{font:inherit} .app{max-width:760px;margin:auto;padding:8px 8
 <div class="gallery-layer" id="galleryLayer"><img class="gallery-img active" id="galleryA" alt=""><img class="gallery-img" id="galleryB" alt=""></div>
 <div class="map-layer" id="mapLayer" hidden><iframe id="inlineMapFrame" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><div class="map-badge" id="inlineMapBadge">Rota</div></div>
 <div class="gradient"></div><button class="tap left" id="photoPrev" type="button"></button><button class="tap right" id="photoNext" type="button"></button>
-</div><div class="topbar"><button class="icon" id="backBtn" type="button" aria-label="Rota listesine dön"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10.5 12 3.5l8.5 7"/><path d="M5.5 9v11h13V9"/><path d="M9.5 20v-6h5v6"/></svg></button><div class="tools"><button class="icon" id="noteBtn" type="button" aria-label="Notlar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h8.5L20.5 8v12.5H7z"/><path d="M15.5 3.5V8h5"/><path d="M10 12h7M10 16h5"/></svg></button><button class="icon" id="mapBtn" type="button" aria-label="Harita"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3.5 6.5 5-2.5 7 2.5 5-2.5v14l-5 2.5-7-2.5-5 2.5z"/><path d="M8.5 4v14M15.5 6.5v14"/></svg></button></div></div>
+</div><div class="topbar"><button class="icon" id="backBtn" type="button" aria-label="Rota listesine dön"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10.5 12 3.5l8.5 7"/><path d="M5.5 9v11h13V9"/><path d="M9.5 20v-6h5v6"/></svg></button><div class="tools"><button class="icon emergency-icon" id="emergencyBtn" type="button" aria-label="Acil durum"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3.8 19h16.4z"/><path d="M12 9v4.5"/><path d="M12 17h.01"/></svg></button><button class="icon" id="noteBtn" type="button" aria-label="Notlar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h8.5L20.5 8v12.5H7z"/><path d="M15.5 3.5V8h5"/><path d="M10 12h7M10 16h5"/></svg></button><button class="icon" id="mapBtn" type="button" aria-label="Harita"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3.5 6.5 5-2.5 7 2.5 5-2.5v14l-5 2.5-7-2.5-5 2.5z"/><path d="M8.5 4v14M15.5 6.5v14"/></svg></button></div></div>
+  <div class="notes-stream" id="notesStream" aria-live="polite"></div>
+
+  <div class="emergency-sheet" id="emergencySheet" hidden>
+    <div class="emergency-card">
+      <div class="emergency-head">
+        <div>
+          <small>ACİL DURUM</small>
+          <h3>Yakındaki yerler</h3>
+        </div>
+        <button class="emergency-close" id="emergencyClose" type="button" aria-label="Kapat">×</button>
+      </div>
+      <p>Telefonun konumunu kullanarak Google Maps’te yakınındaki seçenekleri açar.</p>
+      <div class="emergency-actions">
+        <button type="button" id="nearestPharmacy">En yakın eczane <span>↗</span></button>
+        <button type="button" id="nearestHospital">En yakın hastane <span>↗</span></button>
+      </div>
+      <div class="emergency-status" id="emergencyStatus"></div>
+    </div>
+  </div>
+
   <div class="detailcopy" id="detailCopy"><div class="chips" id="dmeta"></div><h2 id="dtitle"></h2><div class="sub" id="dsub"></div>
 <div class="standard-copy"><p class="desc" id="ddesc"></p><div class="live"><label class="field"><span>Başlangıç</span><input id="startInput" type="time"></label><label class="field"><span>Kalış</span><select id="durInput"><option value="30">30 dk</option><option value="45">45 dk</option><option value="60">1 saat</option><option value="75">1 sa 15 dk</option><option value="90">1 sa 30 dk</option><option value="120">2 saat</option><option value="150">2 sa 30 dk</option><option value="180">3 saat</option></select></label></div></div>
-<div class="notes-stream" id="notesStream"></div><div class="notes-inline" id="notesInline"><form class="note-composer-inline" id="noteInlineForm"><input id="noteInlineInput" placeholder="Bir not yaz, Enter ile ekle…" autocomplete="off"><button type="submit">↑</button></form></div>
+<div class="notes-inline" id="notesInline"><form class="note-composer-inline" id="noteInlineForm"><input id="noteInlineInput" placeholder="Bir not yaz, Enter ile ekle…" autocomplete="off"><button type="submit">↑</button></form></div>
 <div class="actions"><button class="nav" id="prevBtn" type="button" aria-label="Önceki durak"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7"/></svg></button><button class="act" id="doneBtn" type="button">✓ Gidildi</button><button class="act alt" id="skipBtn" type="button">Atla</button><button class="nav" id="nextBtn" type="button" aria-label="Sonraki durak"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button></div>
     <a class="route" id="routeLink" target="_blank" rel="noopener">Google Maps'te yol tarifini aç ↗</a>
   </div>
+
+  <div class="notes-bottom-layer" id="notesBottomLayer" hidden>
+    <form class="note-composer-fixed" id="noteFixedForm">
+      <input id="noteFixedInput" placeholder="Bir not yaz, Enter ile ekle…" autocomplete="off">
+      <button type="submit" aria-label="Not ekle">↑</button>
+    </form>
+    <div class="notes-nav-fixed">
+      <button class="nav" id="notesPrevBtn" type="button" aria-label="Önceki durak">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7"/></svg>
+      </button>
+      <button class="act" id="notesDoneBtn" type="button">✓ Gidildi</button>
+      <button class="act alt" id="notesSkipBtn" type="button">Atla</button>
+      <button class="nav" id="notesNextBtn" type="button" aria-label="Sonraki durak">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+
   <aside class="panel" id="notesPanel" hidden><div class="phead"><div><small>BU DURAK</small><h3>Notlar / checklist</h3></div><button class="close" id="noteClose" type="button">×</button></div><div class="notes" id="notesList"></div><form class="nform" id="noteForm"><input id="noteInput" placeholder="Bir not yaz, Enter ile ekle…"><button>↑</button></form></aside>
   <aside class="panel" id="mapPanel" hidden><div class="phead"><div><small>SONRAKİ ADIM</small><h3>Harita</h3></div><button class="close" id="mapClose" type="button">×</button></div><div class="mapwrap" id="mapWrap"><div class="map-loading">Harita yükleniyor…</div><iframe id="mapFrame" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><div class="mapsum" id="mapSummary"></div><a class="map-fallback" id="mapFallback" target="_blank" rel="noopener">Google Maps’te aç ↗</a></aside>
 </div>
@@ -231,7 +611,7 @@ const states=JSON.parse(localStorage.getItem('nyc.states')||'{}');
 const notes=JSON.parse(localStorage.getItem('nyc.notes')||'{}');
 const timing=JSON.parse(localStorage.getItem('nyc.timing')||'{}');
 const $=id=>document.getElementById(id);
-const els={days:$('days'),summary:$('summary'),daytitle:$('daytitle'),list:$('list'),detail:$('detail'),dmeta:$('dmeta'),dtitle:$('dtitle'),dsub:$('dsub'),ddesc:$('ddesc'),start:$('startInput'),dur:$('durInput'),route:$('routeLink'),notesPanel:$('notesPanel'),notesList:$('notesList'),noteInput:$('noteInput'),mapPanel:$('mapPanel'),mapFrame:$('mapFrame'),mapSummary:$('mapSummary'),galleryA:$('galleryA'),galleryB:$('galleryB'),galleryLayer:$('galleryLayer'),mapLayer:$('mapLayer'),inlineMapFrame:$('inlineMapFrame'),inlineMapBadge:$('inlineMapBadge'),detailCopy:$('detailCopy'),notesStream:$('notesStream'),noteInlineInput:$('noteInlineInput'),mapWrap:$('mapWrap'),mapFallback:$('mapFallback')};
+const els={days:$('days'),summary:$('summary'),daytitle:$('daytitle'),list:$('list'),detail:$('detail'),dmeta:$('dmeta'),dtitle:$('dtitle'),dsub:$('dsub'),ddesc:$('ddesc'),start:$('startInput'),dur:$('durInput'),route:$('routeLink'),notesPanel:$('notesPanel'),notesList:$('notesList'),noteInput:$('noteInput'),mapPanel:$('mapPanel'),mapFrame:$('mapFrame'),mapSummary:$('mapSummary'),galleryA:$('galleryA'),galleryB:$('galleryB'),galleryLayer:$('galleryLayer'),mapLayer:$('mapLayer'),inlineMapFrame:$('inlineMapFrame'),inlineMapBadge:$('inlineMapBadge'),detailCopy:$('detailCopy'),notesStream:$('notesStream'),noteInlineInput:$('noteInlineInput'),notesBottomLayer:$('notesBottomLayer'),noteFixedInput:$('noteFixedInput'),emergencySheet:$('emergencySheet'),emergencyStatus:$('emergencyStatus'),mapWrap:$('mapWrap'),mapFallback:$('mapFallback')};
 const key=(d=dayIndex,i=itemIndex)=>DAYS[d].id+'-'+i;
 const item=()=>DAYS[dayIndex].items[itemIndex];
 function parseTime(v){const m=/^(\d{1,2}):(\d{2})$/.exec(v||'');return m?Number(m[1])*60+Number(m[2]):null}
@@ -241,9 +621,9 @@ function ensureTiming(d,i){const k=key(d,i),it=DAYS[d].items[i];if(!timing[k])ti
 function recalc(d){const arr=DAYS[d].items;for(let i=1;i<arr.length;i++){const prev=ensureTiming(d,i-1),cur=ensureTiming(d,i),it=arr[i];if(it.fixed&&!cur.manual)cur.start=it.time;else if(!cur.manual){const p=parseTime(prev.start);if(p!==null)cur.start=fmt(p+prev.duration+travelMin(it.travel))}}localStorage.setItem('nyc.timing',JSON.stringify(timing))}
 DAYS.forEach((_,i)=>recalc(i));
 function render(){const d=DAYS[dayIndex];els.days.innerHTML='';DAYS.forEach((x,i)=>{const b=document.createElement('button');b.className='daychip'+(i===dayIndex?' active':'');b.textContent=x.label;b.onclick=()=>{dayIndex=i;render()};els.days.appendChild(b)});els.summary.innerHTML='<b>Bugünün rotası:</b> '+d.route;els.daytitle.textContent=d.title;els.list.innerHTML='';d.items.forEach((it,i)=>{const t=ensureTiming(dayIndex,i),st=states[key(dayIndex,i)]||'';const b=document.createElement('button');b.className='route-card';b.type='button';b.dataset.index=i;b.innerHTML=`<div class="imagebox"><img src="${it.images[0]}" alt=""><span class="timechip">${t.start}</span></div><div class="copy"><h3>${it.title}</h3><p>${it.subtitle}</p><div class="meta"><span>◷ ${t.duration<60?t.duration+' dk':(t.duration/60)+' sa'}</span><span>${it.travel}</span></div></div><div class="chev">${st==='done'?'✓':'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>'}</div>`;els.list.appendChild(b)})}
-function openDetail(i){itemIndex=Number(i);photoIndex=0;mapMode=false;noteMode=false;els.mapLayer.hidden=true;els.galleryLayer.style.visibility='visible';$('photoPrev').hidden=false;$('photoNext').hidden=false;$('mapBtn').classList.remove('active');$('noteBtn').classList.remove('active');els.detailCopy.classList.remove('notes-mode');els.notesStream.style.display='none';els.detail.hidden=false;document.body.style.overflow='hidden';applyVisualViewport();syncDetail()}
-function closeDetail(){els.detail.hidden=true;els.notesPanel.hidden=true;els.mapPanel.hidden=true;document.body.style.overflow='';resetVisualViewport();clearInterval(photoTimer)}
-function syncDetail(){const it=item(),t=ensureTiming(dayIndex,itemIndex),st=states[key()]||'';els.dtitle.textContent=it.title;els.dsub.textContent=it.subtitle;els.ddesc.textContent=it.desc;els.start.value=t.start;els.dur.value=String(t.duration);els.route.href=it.maps;els.dmeta.innerHTML=`<span>${it.tag}</span><span>${t.start}</span><span>${t.duration} dk</span><span>${it.travel}</span>`;$('doneBtn').textContent=st==='done'?'✓ Gidildi':'✓ Gidildi';renderStory();if(!els.notesPanel.hidden)renderNotes()}
+function openDetail(i){itemIndex=Number(i);photoIndex=0;mapMode=false;noteMode=false;els.mapLayer.hidden=true;els.galleryLayer.style.visibility='visible';$('photoPrev').hidden=false;$('photoNext').hidden=false;$('mapBtn').classList.remove('active');$('noteBtn').classList.remove('active');els.detailCopy.classList.remove('notes-mode');els.detail.classList.remove('notes-mode');els.notesBottomLayer.hidden=true;els.detail.hidden=false;document.body.style.overflow='hidden';applyVisualViewport();syncDetail()}
+function closeDetail(){els.detail.classList.remove('notes-mode');els.notesBottomLayer.hidden=true;els.notesBottomLayer.hidden=true;els.detail.hidden=true;els.notesPanel.hidden=true;els.mapPanel.hidden=true;document.body.style.overflow='';resetVisualViewport();clearInterval(photoTimer)}
+function syncDetail(){const it=item(),t=ensureTiming(dayIndex,itemIndex),st=states[key()]||'';els.dtitle.textContent=it.title;els.dsub.textContent=it.subtitle;els.ddesc.textContent=it.desc;els.start.value=t.start;els.dur.value=String(t.duration);els.route.href=it.maps;els.dmeta.innerHTML=`<span>${it.tag}</span><span>${t.start}</span><span>${t.duration} dk</span><span>${it.travel}</span>`;$('doneBtn').textContent='✓ Gidildi';$('notesDoneBtn').textContent='✓ Gidildi';renderStory();if(!els.notesPanel.hidden)renderNotes()}
 function showPhoto(index,animate=true){
  const imgs=item().images||[]; if(!imgs.length)return; photoIndex=(index+imgs.length)%imgs.length;
  const front=galleryFront==='A'?els.galleryA:els.galleryB, back=galleryFront==='A'?els.galleryB:els.galleryA;
@@ -261,7 +641,19 @@ function mark(v){const k=key();states[k]=states[k]===v?'':v;localStorage.setItem
 function updateTiming(){const t=ensureTiming(dayIndex,itemIndex);t.start=els.start.value;t.duration=Number(els.dur.value);t.manual=true;recalc(dayIndex);localStorage.setItem('nyc.timing',JSON.stringify(timing));render();syncDetail()}
 function updateInlineMap(){const it=item(),next=DAYS[dayIndex].items[itemIndex+1];if(next){const o=encodeURIComponent(it.title+' New York'),d=encodeURIComponent(next.title+' New York');els.inlineMapFrame.src='https://www.google.com/maps?output=embed&saddr='+o+'&daddr='+d;els.inlineMapBadge.textContent=next.travel||'Sonraki durak'}else{const q=encodeURIComponent(it.title+' New York');els.inlineMapFrame.src='https://www.google.com/maps?q='+q+'&output=embed';els.inlineMapBadge.textContent='Günün son durağı'}}
 function toggleMapMode(){mapMode=!mapMode;els.mapLayer.hidden=!mapMode;els.galleryLayer.style.visibility=mapMode?'hidden':'visible';$('photoPrev').hidden=mapMode;$('photoNext').hidden=mapMode;$('mapBtn').classList.toggle('active',mapMode);clearInterval(photoTimer);if(mapMode)updateInlineMap();else startGallery()}
-function toggleNoteMode(){noteMode=!noteMode;els.detailCopy.classList.toggle('notes-mode',noteMode);$('noteBtn').classList.toggle('active',noteMode);els.notesStream.style.display=noteMode?'flex':'none';if(noteMode){renderInlineNotes();setTimeout(()=>els.noteInlineInput.focus(),70)}else{els.noteInlineInput.blur()}}
+function toggleNoteMode(){
+  noteMode=!noteMode;
+  els.detail.classList.toggle('notes-mode',noteMode);
+  $('noteBtn').classList.toggle('active',noteMode);
+  els.notesBottomLayer.hidden=!noteMode;
+  if(noteMode){
+    renderInlineNotes();
+    setTimeout(()=>{els.noteFixedInput.focus();syncNotesKeyboard()},70);
+  }else{
+    els.noteFixedInput.blur();
+    resetNotesKeyboard();
+  }
+}
 function noteArr(){const k=key();if(!Array.isArray(notes[k]))notes[k]=[];return notes[k]}
 function saveNotes(){localStorage.setItem('nyc.notes',JSON.stringify(notes))}
 function renderInlineNotes(){const a=noteArr();els.notesStream.innerHTML='';if(!a.length){els.notesStream.innerHTML='<div class="notes-empty">Henüz not yok. Aşağıdan ilk notunu ekleyebilirsin.</div>';return}a.forEach((n,i)=>{const card=document.createElement('div');card.className='comment-card'+(n.checked?' checked':'');const check=document.createElement('button');check.type='button';check.className='comment-check';check.textContent=n.checked?'✓':'';const text=document.createElement('div');text.className='comment-text';text.textContent=n.text;const del=document.createElement('button');del.type='button';del.className='comment-delete';del.setAttribute('aria-label','Notu sil');del.textContent='×';check.onclick=()=>{n.checked=!n.checked;saveNotes();renderInlineNotes()};del.onclick=()=>{a.splice(i,1);saveNotes();renderInlineNotes()};card.append(check,text,del);els.notesStream.appendChild(card)})}
@@ -292,23 +684,79 @@ function openMap(){
 els.list.addEventListener('click',e=>{const c=e.target.closest('.route-card');if(c)openDetail(c.dataset.index)});
 $('backBtn').onclick=closeDetail;$('photoNext').onclick=nextPhoto;$('photoPrev').onclick=prevPhoto;$('nextBtn').onclick=nextStop;$('prevBtn').onclick=prevStop;$('doneBtn').onclick=()=>mark('done');$('skipBtn').onclick=()=>mark('skip');els.start.onchange=updateTiming;els.dur.onchange=updateTiming;
 $('noteBtn').onclick=toggleNoteMode;$('mapBtn').onclick=toggleMapMode;
-$('noteInlineForm').onsubmit=e=>{e.preventDefault();const v=els.noteInlineInput.value.trim();if(!v)return;noteArr().push({text:v,checked:false});els.noteInlineInput.value='';saveNotes();renderInlineNotes()};
+
+
+$('noteFixedForm').onsubmit=e=>{
+  e.preventDefault();
+  const v=els.noteFixedInput.value.trim();
+  if(!v)return;
+  noteArr().push({text:v,checked:false});
+  els.noteFixedInput.value='';
+  saveNotes();
+  renderInlineNotes();
+};
+$('notesPrevBtn').onclick=prevStop;
+$('notesNextBtn').onclick=nextStop;
+$('notesDoneBtn').onclick=()=>mark('done');
+$('notesSkipBtn').onclick=()=>mark('skip');
+
+
+function openEmergency(){
+  els.emergencySheet.hidden=false;
+  els.emergencyStatus.textContent='';
+}
+function closeEmergency(){
+  els.emergencySheet.hidden=true;
+}
+function openNearest(kind){
+  const query = kind==='pharmacy' ? 'pharmacy' : 'hospital';
+  const fallback = 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(query+' near me');
+
+  if(!navigator.geolocation){
+    window.open(fallback,'_blank','noopener');
+    return;
+  }
+
+  els.emergencyStatus.textContent='Konum alınıyor…';
+
+  navigator.geolocation.getCurrentPosition(
+    pos=>{
+      const lat=pos.coords.latitude, lng=pos.coords.longitude;
+      const url='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(query)+'&query_place_id=&center='+lat+','+lng;
+      els.emergencyStatus.textContent='Google Maps açılıyor…';
+      window.open(url,'_blank','noopener');
+    },
+    ()=>{
+      els.emergencyStatus.textContent='Konum izni alınamadı. Google Maps yakın araması açılıyor.';
+      window.open(fallback,'_blank','noopener');
+    },
+    {enableHighAccuracy:true,timeout:7000,maximumAge:60000}
+  );
+}
+
+
+$('emergencyBtn').onclick=openEmergency;
+$('emergencyClose').onclick=closeEmergency;
+$('nearestPharmacy').onclick=()=>openNearest('pharmacy');
+$('nearestHospital').onclick=()=>openNearest('hospital');
+els.emergencySheet.addEventListener('click',e=>{if(e.target===els.emergencySheet)closeEmergency()});
+
 let sx=null,sy=null;els.detail.addEventListener('pointerdown',e=>{if(e.target.closest('button,input,select,a,.panel'))return;sx=e.clientX;sy=e.clientY});els.detail.addEventListener('pointerup',e=>{if(sx===null)return;const dx=e.clientX-sx,dy=e.clientY-sy;if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy))dx<0?nextStop():prevStop();sx=sy=null});
 
 
-function applyVisualViewport(){
-  if(!window.visualViewport)return;
+
+function syncNotesKeyboard(){
+  if(!window.visualViewport || els.notesBottomLayer.hidden)return;
   const vv=window.visualViewport;
-  els.detail.style.height=vv.height+'px';
-  els.detail.style.top=vv.offsetTop+'px';
+  const keyboard=Math.max(0,window.innerHeight-vv.height-vv.offsetTop);
+  els.notesBottomLayer.style.bottom=(keyboard+12)+'px';
 }
-function resetVisualViewport(){
-  els.detail.style.height='';
-  els.detail.style.top='';
+function resetNotesKeyboard(){
+  els.notesBottomLayer.style.bottom='';
 }
 if(window.visualViewport){
-  window.visualViewport.addEventListener('resize',applyVisualViewport);
-  window.visualViewport.addEventListener('scroll',applyVisualViewport);
+  window.visualViewport.addEventListener('resize',syncNotesKeyboard);
+  window.visualViewport.addEventListener('scroll',syncNotesKeyboard);
 }
 
 render();
